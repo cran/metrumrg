@@ -29,12 +29,15 @@ never be \code{NA}, and prints as \sQuote{C} or \sQuote{.} (\code{TRUE},\code{FA
 \method{[[}{comment}(x, ..., drop = TRUE)
 \method{as.comment}{default}(x, ...)
 \method{as.data.frame}{comment}(x, row.names = NULL, optional = FALSE, ...)
+\method{as.character}{comment}(x, ...)
+\method{as.comment}{comment}(x, ...)
 \method{c}{comment}(..., recursive = FALSE)
 \method{format}{comment}(x, ...)
 \method{hide}{data.frame}(x, where, why, ...)
 \method{print}{comment}(x, ...)
 \method{rep}{comment}(x, ...)
 \method{hidden}{data.frame}(x, ...)
+\method{xtfrm}{comment}(x)
 \method{summary}{hidden.data.frame}(object, ...)
 }
 
@@ -64,6 +67,8 @@ no hide flags, the result is a data frame with one cell: ncol=0. If
 \code{hidden(x)} has no rows, the result is a data frame with one cell: nrow=0.
 }
 \value{comment, or data.frame for \code{hide.data.frame}, etc.}
+\references{\url{http://metrumrg.googlecode.com}}
+\author{Tim Bergsma}
 \examples{
 Theoph <- hide(Theoph, where=Theoph$conc < 1,why='blq')
 Theoph <- hide(Theoph, where=Theoph$Subject==1,why='suspect')

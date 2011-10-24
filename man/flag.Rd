@@ -31,6 +31,7 @@ f(x, ...)
 \method{format}{flag}(x, ...)
 \method{print}{flag}(x, ...)
 \method{rep}{flag}(x, ...)
+\method{xtfrm}{flag}(x)
 }
 \arguments{
   \item{x}{the flag object, or something coercible to integer}
@@ -49,7 +50,7 @@ are welcome to impute \code{NA}s as 0. Methods are defined for common classes.
 \code{f} is an alias to \code{as.flag}.
 }
 \value{flag}
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \examples{
 hide(Theoph,where=Theoph$conc < 1,why='BLQ')

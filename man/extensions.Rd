@@ -25,8 +25,8 @@ for \code{Ops.keyed} are techniques for dynamic preparation.
 as.moot(...)
 as.rigged(...)
 
-\method{minus}{moot}(x, y, ...)
-\method{plus}{rigged}(x, y)
+minus.moot(x, y, ...)
+plus.rigged(x, y)
 
 
 }
@@ -91,7 +91,7 @@ timecourse (i.e., \sQuote{rigging}). \code{as.rigged} returns a list of class \c
 \code{deranged} returns keyed data.frame.
 
 }
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{

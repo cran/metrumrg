@@ -16,8 +16,13 @@ rlog(
 	rundir = filename(project, run, if(boot) '.boot' else ''),
 	nmlog = file.path(rundir,'NonmemRunLog.csv'),
 	nmout = filename(rundir,run,'.lst'),
-	pattern = if(boot)c('^F','^nonmem.exe','^P','^O','^Run') else '^FD',
-	...
+        pattern = c(
+        	'^F[ISRCMP]','^OU','^nonmem','^nul$', 
+        	'WK', 'LNK$', 'fort', '^nm', 'lnk$', 
+        	'set$','^gar', 'INT', '^temp', '^tr', 
+        	'^new', '^FD','^Run\\\\d+\\\\.o\\\\d+$','^prsizes'
+        ),
+ 	...
 )
 }
 \arguments{
@@ -49,7 +54,7 @@ rlog(
   Combined runlog is returned invisibly in the unilog format.  Side effect: if
   \code{file} is specified, runlog format is written to disk.
 }
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{written by Bill Knebel; modified by Tim Bergsma.}
 \seealso{
 	\itemize{

@@ -24,6 +24,7 @@ the (named) vector of the corresponding class.
 \method{as.halfmatrix}{halfmatrix}(x,...)
 \method{as.halfmatrix}{default}(x,...)
 \method{offdiag}{halfmatrix}(x,...)
+\method{print}{halfmatrix}(x,...)
 }
 \arguments{
   \item{x}{symmetric matrix (half) or halfmatrix equivalent (as.matrix)}
@@ -40,7 +41,7 @@ in which case \code{as.matrix(x))} suffices.
 vector with as many elements as a triangular matrix corresponding to \code{x} 
 (except \code{as.matrix} returns matrix)
 }
-\references{\url{http://metrumrg.r-forge.r-project.org}}
+\references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{
