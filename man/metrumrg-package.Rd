@@ -24,16 +24,17 @@ I want to ....
 \item \link[=helpReport]{report} modeling and simulation results systematically
 \item \link[=helpAdminister]{administer} related files and file systems
 \item \link[=helpList]{list} all functions
+\item \link[=helpBrowse]{browse} extended examples
 }  
 \tabular{ll}{
 Package: \tab metrumrg\cr
 Type: \tab Package\cr
-Version: \tab 5.3\cr
-Date: \tab 2011-10-24\cr
+Version: \tab 5.5\cr
+Date: \tab 2011-11-11\cr
 License: \tab GPL\cr
 }
 }
   
-  \author{Tim Bergsma, Bill Knebel, and Leonid Gibianski. Maintainer: Tim Bergsma <timb@metrumrg.com>}
+  \author{Tim Bergsma, Bill Knebel, and Leonid Gibiansky. Maintainer: Tim Bergsma <timb@metrumrg.com>}
   \references{\url{http://metrumrg.googlecode.com}}
   \keyword{manip}

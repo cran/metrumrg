@@ -60,6 +60,7 @@ wiki2parameter(x,...)
   	        \item \code{\link{closers}}
   	        \item \code{\link{wikitab}}
   	        \item \code{\link{tos}}
+  	        \item \code{\link{parameter2wiki}}
 	}
 }
 \examples{
@@ -68,5 +69,6 @@ wiki2latex(wiki)
 wiki2plotmath(wiki)
 wiki2label(wiki)
 wiki2parameter(wiki)
+\dontrun{metrumrgURL('example/wikimath/wikimath.pdf')}
 }
 \keyword{manip}
