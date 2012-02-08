@@ -4,13 +4,17 @@
 \alias{left.keyed}
 \alias{minus.keyed}
 \alias{plus.keyed}
+\alias{raised.keyed}
 
 \title{Operator Syntax for Joining Keyed Data Frames}
 \description{
 These functions implement a concise syntax for joining objects of class \code{c('keyed', 'data frame')}.
 \code{+} produces an outer join, \code{&} produces an inner join, and \code{|} gives
-a left join.  By default, \code{-} drops rows in \code{x}
-that have matching rows in \code{y}. The syntax can be extended to subclasses of
+a left join.  By default, \code{-} drops rows in \code{x} that have matching rows in \code{y}. 
+\code{^} gives a sequential left join: x is joined cumulatively with static variants of y,
+using left subsets of the key (e.g. subj, subj-time, subj-time-cmt, etc.).
+
+The syntax can be extended to subclasses of
 \code{keyed} by writing additional proxy methods.
 }
 \usage{
@@ -19,6 +23,7 @@ plus.keyed(x, y)
 and.keyed(x, y)
 minus.keyed(x, y)
 left.keyed(x, y)
+raised.keyed(x,y)
 }
 \arguments{
   \item{e1}{left argument to Ops}
@@ -74,6 +79,7 @@ examples.  See examples for \code{as.nm}.
 \seealso{
 	\itemize{
 		\item \code{\link{as.nm}}
+		\item \code{\link{static.keyed}}
 	}
 }
 \keyword{manip}

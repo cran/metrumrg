@@ -1,15 +1,19 @@
 \name{tabular.data.frame}
 \alias{tabular.data.frame}
 \alias{as.document}
-\alias{as.document.tabular}
+\alias{as.document.character}
 \alias{as.document.data.frame}
 \alias{as.pdf}
 \alias{as.pdf.document}
-\alias{as.pdf.tabular}
+\alias{as.pdf.character}
 \alias{as.pdf.data.frame}
 \alias{tabular}
 \alias{as.tabular}
+\alias{tex2pdf}
+\alias{viewtex}
+
 \title{Convert a Data Frame to a Latex Tabular Environment, Latex Document, or PDF}
+
 \description{ The functions \code{tabular}, \code{as.document}, and \code{as.pdf}
 are generic.  Methods are given here that cascade in the order data.frame -> tabular
 -> document -> pdf.  \code{as.document.data.frame} is argued identically to \code{tabular},
@@ -18,6 +22,10 @@ width for a page size identical to the printed area (you can modify with the arg
 \code{wider} and \code{longer}).  \code{as.pdf.document} needs a file stem and 
 (optionally) whether to perform clean-up.  The other \code{as.pdf} methods are 
 convenience wrappers. \code{as.tabular} is an alias for \code{tabular}.
+
+\code{tex2pdf} accepts the file names of tex fragments. It reads those fragments, 
+wraps them like documents and makes pdf files.  \code{viewtex} goes one step further, 
+and tries to open those pdfs for viewing.
 }
 \usage{
 \method{tabular}{data.frame}(
@@ -64,13 +72,38 @@ convenience wrappers. \code{as.tabular} is an alias for \code{tabular}.
 	epilog = NULL,	
 	...
 )
-\method{as.document}{tabular}(x,wide,long,prolog=NULL,epilog=NULL,...)
+\method{as.document}{character}(
+	x,
+	landscape=FALSE,
+	wide=if(landscape) 279.4 else 215.9,
+	long=if(landscape) 215.9 else 279.4,
+	prolog=NULL,
+	epilog=NULL,
+	...
+)
 \method{as.pdf}{document}(x,stem,dir='.',clean=TRUE,...)
-\method{as.pdf}{tabular}(x,wide,long,stem,...)
+\method{as.pdf}{character}(
+	x,
+	stem,
+	landscape=FALSE,
+	wide=if(landscape) 279.4 else 215.9,
+	long=if(landscape) 215.9 else 279.4,
+	...
+)
 \method{as.pdf}{data.frame}(x,stem,...)
+tex2pdf(
+	x,
+	stem=NULL,
+	dir=NULL,
+	landscape=FALSE,
+	clean=TRUE,
+	onefile=FALSE,
+	...
+)
+viewtex(x,delete=TRUE,latency=1,...)
 }
 \arguments{
-  \item{x}{object to be converted, typically data.frame}
+  \item{x}{object to be converted, typically data.frame (paths of tex files for \code{tex2pdf} and \code{viewtex})}
   \item{rules}{numeric; will be recycled to length 3.  indicates number of 
   horizontal lines above and below the header, and below the last row.}
   \item{walls}{numeric, recycled to length 2.  Number of vertical lines
@@ -96,9 +129,13 @@ convenience wrappers. \code{as.tabular} is an alias for \code{tabular}.
   \item{longer}{additional document lenth in mm}
   \item{prolog}{latex markup to include before the tabular environment}
   \item{epilog}{latex markup to include after the tabular environment}
+  \item{landscape}{if TRUE, default orientation is `landscape' not `portrait'}
   \item{stem}{the stem of a file name (no extension)}
   \item{dir}{output directory}
   \item{clean}{whether to delete system files after pdf creation}
+  \item{onefile}{whether to combine tex snippets into a single file}
+  \item{delete}{whether temporary pdf (_doc.pdf) should persist}
+  \item{latency}{how many seconds to wait before deleting temporary pdf}
   \item{\dots}{passed to called functions}
 }
 \details{

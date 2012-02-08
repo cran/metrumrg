@@ -55,12 +55,16 @@
 	class(y) <- class(x)
 	y
 }
-
 `format.comment` <- function(x,...)unclass(ifelse(x,"C","."))
 
 `print.comment` <- function(x,...){
 	print(format(x),...,quote=FALSE)
 	invisible(x)
+}
+unique.comment <-
+function (x, incomparables = FALSE,...){
+    oldclass <- class(x)
+    structure(unique(unclass(x)), class = oldclass)
 }
 xtfrm.comment <- function(x)as.numeric(x)
 
@@ -131,7 +135,7 @@ summary.hidden.data.frame <- function(object,...){
 	if(nrow(unique))unique$hidden.scope <- 'unique'
 	else unique <- NULL
 	molten <- melt(rbind(hideflags,unique),id.var='hidden.scope')
-	y <- data.frame(cast(molten,fun=sum))
+	y <- data.frame(cast(molten,fun.aggregate=sum))
 	rownames(y) <- y$hidden.scope
 	y$hidden.scope <- NULL
 	y

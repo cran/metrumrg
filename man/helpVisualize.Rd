@@ -12,6 +12,7 @@ I want to ....
 \item \link[=covplot]{make forest plots of covariate effects}
 \item \link[=panel.stratify]{handle each level of a stripplot independently} 
 \item \link[=plot.nm]{plot nm objects}
-\item \link[=xyplot.ext]{plot the parameter search history for a NONMEM7 run}
+\item \link[=xyplotExt]{plot the parameter search history for a NONMEM7 run}
+\item \link[=digest]{make scatterplots and index plots for static members of a data set}
 }
 }

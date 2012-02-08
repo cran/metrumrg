@@ -88,7 +88,7 @@ zeroAmt.nm <- function(x,...){
 noPk <- function(x,...)UseMethod('noPk')
 noPk.nm <- function(x,...){
 	if(!'EVID' %in% names(x))return(rep(FALSE,nrow(x)))
-	with(x,is.na(first(where=EVID==0 & !C,within=SUBJ)))
+	with(x,!C & is.na(first(where=EVID==0 & !C,within=SUBJ)))
 }
 
 badII <- function(x,...)UseMethod('badII')
@@ -283,6 +283,10 @@ merge.nm <- function(x,y,...)as.nm(merge(data.frame(x),y,...))
 	x <- shuffle(x,key(x),after='C')
 	row.names(x) <- NULL
 	if(!inherits(x,'nm'))class(x) <- c('nm',class(x))
+	for(col in c('SUBJ','ID','C','TIME','SEQ','TAFD','TAD','LDOS','MDV'))
+		if(col %in% names(x))
+			class(x[[col]]) <- c(col,class(x[[col]]))
+	x[] <- lapply(x,as.nm,data=x,...)
 	x
 }
-
+as.nm.default <- function(x,...)x

@@ -29,12 +29,12 @@ I want to ....
 \tabular{ll}{
 Package: \tab metrumrg\cr
 Type: \tab Package\cr
-Version: \tab 5.5\cr
-Date: \tab 2011-11-11\cr
+Version: \tab 5.13\cr
+Date: \tab 2011-02-08\cr
 License: \tab GPL\cr
 }
 }
   
-  \author{Tim Bergsma, Bill Knebel, and Leonid Gibiansky. Maintainer: Tim Bergsma <timb@metrumrg.com>}
+  \author{Tim Bergsma, Bill Knebel, Leonid Gibiansky, Natalie Hsiang. Maintainer: Tim Bergsma <timb@metrumrg.com>}
   \references{\url{http://metrumrg.googlecode.com}}
   \keyword{manip}

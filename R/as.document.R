@@ -1,5 +1,13 @@
 as.document <- function(x,...)UseMethod('as.document')
-as.document.tabular <- function(x,wide,long,prolog=NULL,epilog=NULL,...){
+as.document.character <- function(
+	x,
+	landscape=FALSE,
+	wide=if(landscape) 279.4 else 215.9,
+	long=if(landscape) 215.9 else 279.4,
+	prolog=NULL,
+	epilog=NULL,
+	...
+){
     papersize <- glue('{',wide,'mm',',',long,'mm}')
     doc <-  c(
     	command('documentclass',args='article'),
@@ -91,11 +99,22 @@ as.document.data.frame <- function(
           trim=trim,
           ...
   )
-  doc <-  as.document(tab,wide,long,prolog=prolog,epilog=epilog,...)
+  doc <-  as.document(tab,wide=wide,long=long,prolog=prolog,epilog=epilog,...)
   doc
 }
 as.pdf <- function(x,...)UseMethod('as.pdf')
-as.pdf.document <- function(x,stem,dir='.',clean=TRUE,...){
+as.pdf.document <- function(
+	x,
+	stem,
+	dir='.',
+	clean=TRUE,
+	...
+){
+	if(missing(stem))stop('a file stem (no extension) must be provided')
+	if (contains('\\.pdf$',stem,ignore.case=TRUE)){
+		warning('stripping .pdf from file stem ...')
+		stem <- sub('\\.pdf$','',stem,ignore.case=TRUE)
+	}
 	outfile <- glue(stem,'.tex')
 	outpath <- file.path(dir,outfile)
 	writeLines(x,outpath)
@@ -107,5 +126,69 @@ as.pdf.document <- function(x,stem,dir='.',clean=TRUE,...){
 	if(clean)file.remove(actuals)
 	invisible(result)
 }
-as.pdf.tabular <- function(x,wide,long,stem,...)as.pdf(as.document(x,wide=wide,long=long,...),stem=stem,...)
+as.pdf.character <- function(
+	x,
+	stem,
+	landscape=FALSE,
+	wide=if(landscape) 279.4 else 215.9,
+	long=if(landscape) 215.9 else 279.4,
+	...
+)as.pdf(
+	as.document(
+		x,
+		wide=wide,
+		long=long,
+		...
+	),
+	stem=stem,
+	...
+)
 as.pdf.data.frame <- function(x,stem,...)as.pdf(as.document(x,...),stem=stem,...)
+
+tex2pdf <- function(
+	x,
+	stem=NULL,
+	dir=NULL,
+	landscape=FALSE,
+	clean=TRUE,
+	onefile=FALSE,
+	...
+){
+	stopifnot(
+		length(x)>0,
+		all(file.exists(x)),
+		length(stem)==1 | length(stem)==length(x) | stem==NULL,
+		length(stem)==1 | onefile==FALSE | stem==NULL,
+		length(dir)==1 | length(dir)==length(x) | dir==NULL
+	)
+	is.tex <- sapply(x,function(nm)contains('\\.tex',nm,ignore.case=TRUE))
+	if(any(!is.tex))warning('x is expected to be a vector of tex file names')
+	dat <- lapply(x,readLines)
+	if(is.null(stem))stem <- sub('\\.[^.]+$','',basename(x),ignore.case=TRUE)
+	if(is.null(dir))dir <- dirname(x)
+	dir <- rep(dir,length.out=length(stem))
+	if(onefile)stem <- stem[[1]]
+	if(onefile)dir <- dir[[1]]
+	if(onefile)dat <- list(unlist(dat))
+	stopifnot(length(dat)==length(stem),length(dat)==length(dir))
+	target <- glue(stem,'_doc')
+	for(index in seq_along(dat)){
+		as.pdf.character(
+			dat[[index]],
+			stem=target[[index]],
+			dir=dir[[index]],
+			landscape=landscape,
+			clean=clean,
+			...
+		)
+	}
+	invisible(file.path(dir,glue(target,'.pdf')))
+}
+
+viewtex <- function(x,delete=TRUE,latency=1,...){
+	newfiles <- tex2pdf(x,...)
+	sapply(newfiles,browseURL)
+	if(delete)Sys.sleep(latency)
+	if(delete)sapply(newfiles,unlink)
+	invisible(newfiles)
+}
