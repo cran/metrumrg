@@ -81,7 +81,15 @@ xpath <- function(x,file){
 		free(tree)
 		result
 }
+#xpath <-  function (x, file){#per Klaas Prins 71 Jan 2013
+#    tree <- xmlParse(readLines(file), asText = TRUE, error = NULL)
+#    result <- xpathSApply(tree, x, fun = function(y) as.vector(xmlSApply(y,xmlValue)))
+#    free(tree)
+#    result
+#}
+
 .minstat <- function(x)xpath(x='//nm:termination_status/text()',file=x)
+
 as.unilog.run <- function(
 	run,
 	logfile='NonmemRunLog.csv',

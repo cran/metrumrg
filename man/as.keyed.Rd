@@ -13,10 +13,23 @@
 \alias{naKeys.default}
 \alias{print.keyed.summary}
 \alias{sort.keyed}
+\alias{unsorted}
+\alias{unsorted.keyed}
 \alias{summary.keyed}
 \alias{transform.keyed}
 \alias{uniKey.keyed}
 \alias{uniKey}
+\alias{print.uniKey}
+\alias{c.uniKey}
+\alias{as.vector.uniKey}
+\alias{[.uniKey}
+\alias{[[.uniKey}
+\alias{rep.uniKey}
+\alias{format.uniKey}
+\alias{print.uniKey}
+\alias{unique.uniKey}
+\alias{xtfrm.uniKey}
+\alias{as.character.uniKey}
 \title{Create and Manipulate Keyed Data Frames}
 \description{The class \dfn{keyed} is a subclass of data.frame with a \dfn{key} attribute.
 The key is a vector of column names which, taken together, should provide enough
@@ -26,12 +39,13 @@ take advantage of this information.
 \usage{
 \method{[}{keyed}(x, ...)
 \method{aggregate}{keyed}(x, by=x[,setdiff(key(x),across),drop=FALSE], FUN, across=character(0), ...)
-\method{as.keyed}{data.frame}(x, key, ...)
+\method{as.keyed}{data.frame}(x, key=character(0), ...)
 dupKeys(x, ...)
 key(x, ...)
 key(x) <- value
 \method{merge}{keyed}(x, y, ...)
 naKeys(x, ...)
+unsorted(x, ...)
 \method{print}{keyed.summary}(x, ...)
 \method{sort}{keyed}(x, decreasing = FALSE, ...)
 \method{summary}{keyed}(object, ...)
@@ -80,11 +94,16 @@ row, as \code{duplicated} can: it identifies the duplicates as well as those row
 which they are duplicates. It is recommended to test for \code{NA}s before testing 
 for duplicates.
 
+The \code{keyed} method for \code{unsorted} detects rows that would move on sort.
+
 %\code{order} treats \code{decreasing} as an all-or-nothing argument, whereas \code{sort.keyed} 
 %allows independent specification for each column.
 
 Methods for \code{merge} and \code{transform} are key-friendly. The method for \code{summary}
-is key-centric.  \code{uniKey} creates a single character vector from all the key columns.
+is key-centric.  
+
+\code{uniKey} creates a character vector (class \code{uniKey}) by pasting the key columns with \code{\\r}. 
+(Keys containing \code{\\r} are unsupported.) The \code{as.character} method substitutes a space character for \code{\\r}.  
 }
 \value{
 Most functions and methods documented here return objects with class 
@@ -92,16 +111,20 @@ Most functions and methods documented here return objects with class
 
 \code{key<-} and methods for \code{summary} and \code{print} are used for side effects.
 
-\code{uniKey.keyed} returns a character vector as long as \code{nrow(x)}.
+\code{uniKey.keyed} returns a character vector as long as \code{nrow(x)}, class \code{uniKey}.
 
-\code{naKeys} and \code{dupKeys} return logical vectors as long as \code{nrow(x)}.
+\code{naKeys}, \code{dupKeys}, and \code{unsorted} return logical vectors as long as \code{nrow(x)}.
 
 }
+\note{Values in key columns should not contain \code{\\r}, which is used as a delimiter in
+\code{dupKeys} and \code{uniKey}.}
 \references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{
 	\itemize{
 		\item \code{\link{Ops.keyed}}
+    \item \code{\link{melt.keyed}}
+    \item \code{\link{cast,keyed-method}}
 	}
 }
 \examples{

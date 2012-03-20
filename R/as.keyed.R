@@ -2,7 +2,7 @@
 
 `as.keyed.data.frame` <- function(
 	x,
-	key,
+	key=character(0),
 	...
 ){
 	key(x) <- key
@@ -40,13 +40,15 @@
 	if(nrow(x)==1)dim(y) <- c(1,length(y))
 	as.logical(apply(y,1,sum))
 }
+unsorted <- function(x,...)UseMethod('unsorted')
+unsorted.keyed <- function(x, decreasing=FALSE, ...)rownames(x) != rownames(sort(x,decreasing=decreasing,...))
 
 `print.keyed.summary` <- function(x,...){
 	writeLines(paste(x$key,collapse='~'))
 	writeLines(paste(x$naKeys,'NA keys'))
 	writeLines(paste(x$dupKeys,'duplicate keys'))
-	if(!x$sorted)writeLines('unsorted')
-	if(length(setdiff(names(x),c('key','naKeys','dupKeys','sorted'))))writeLines('other attributes present')
+	if(x$unsorted)writeLines(paste('unsorted',x$unsorted,sep=': '))
+	if(length(setdiff(names(x),c('key','naKeys','dupKeys','unsorted'))))writeLines('other attributes present')
 }
 	
 `summary.keyed` <- function(object,...){
@@ -55,7 +57,7 @@
 	z$key <- key(x)
 	z$naKeys <- sum(naKeys(x))
 	z$dupKeys <- sum(dupKeys(x))
-	z$sorted <- identical(x,sort(x))
+	z$unsorted <- sum(unsorted(x))
 	class(z) <- 'keyed.summary'
 	z	
 }
@@ -64,8 +66,61 @@
 
 `uniKey.keyed` <- function(x,key=NULL,...){
 	if(is.null(key))key <- key(x)
-	do.call(paste,x[,key,drop=FALSE])
+	key <- x[,key,drop=FALSE]
+	res <- do.call(paste,c(key,list(sep='\r')))
+	class(res) <- c('uniKey',class(res))
+	res
 }
+`c.uniKey` <- function(...,recursive=FALSE)structure(c(unlist(lapply(list(...), unclass))), class="uniKey")
+
+`[.uniKey` <- function (x, ..., drop = TRUE) 
+{
+    cl <- oldClass(x)
+    class(x) <- NULL
+    val <- NextMethod("[")
+    class(val) <- cl
+    val
+}
+
+`[[.uniKey` <- function (x, ..., drop = TRUE) 
+{
+    cl <- oldClass(x)
+    class(x) <- NULL
+    val <- NextMethod("[[")
+    class(val) <- cl
+    val
+}
+
+`rep.uniKey` <- function(x,...){
+	y <- NextMethod()
+	class(y) <- class(x)
+	y
+}
+`format.uniKey` <- function(x,...)as.character(x,...)
+as.character.uniKey <- function(x,...)unclass(gsub('\r',' ',x))
+
+`print.uniKey` <- function(x,...){
+	print(format(x),...,quote=FALSE)
+	invisible(x)
+}
+unique.uniKey <-
+function (x, incomparables = FALSE,...){
+    oldclass <- class(x)
+    structure(unique(unclass(x)), class = oldclass)
+}
+xtfrm.uniKey <- function(x)as.character(x)
+as.vector.uniKey <- function(x,...)x
+#unit test
+
+#x <- data.frame(
+#  x=c('a ','a'),
+#  y=c('b',' b')
+#)
+#x
+#x <- as.keyed(x, c('x','y'))
+#uniKey(x)
+#factor(uniKey(x))
+#uniKey(x,sep='.')
 
 aggregate.keyed <- function(
 	x,

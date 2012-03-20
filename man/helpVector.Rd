@@ -12,7 +12,7 @@ I want to ....
 \item \link[=contains]{test a character vector for occurences of a pattern}
 \item \link[=forbak]{impute missing vector values}
 \item \link[=runhead]{check some properties of vectors}
-\item \link[=temporal]{create date, time, and date-time objects}
+\item \link[=timepoint]{create date, time, and date-time objects}
 \item \link[=map]{map one set of values to another}
 \item \link[=titleCase]{coerce text to title case}
 \item \link[=addl]{calculate the NONMEM ADDL data item from explicit dose records}
@@ -20,5 +20,6 @@ I want to ....
 \item \link[=as.second]{interconvert time units}
 \item \link[=is.defined]{test whether elements are defined}
 \item \link[=pool]{test for unique and shared elements among two vectors}
+\item \link[=as.vector.keyed]{binary operators for set relations}
 }
 }
