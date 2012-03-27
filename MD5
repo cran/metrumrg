@@ -1,4 +1,5 @@
-89450008d8be1e12a76da0d4f32c735a *DESCRIPTION
+1fcdaccd7ba6353cea5a13f022fee573 *ChangeLog
+bb2cd6a1daf139d2c4e6a04cda6b34d8 *DESCRIPTION
 f5f5366cae7f199a36e0430d81d34c00 *NAMESPACE
 bb95afa7ffb0018e23979ff674dfc035 *R/CLNR.R
 76c81cd72f95b67af2e6310b71f42cac *R/NONR.R
@@ -25,7 +26,7 @@ f9c8de8aad6bcf1ae6e0766c01ed9f62 *R/bin.R
 f5d56bdf2e495e7637ce34d073af2a67 *R/bounds.R
 dd7ce75b3986bb9a9334bda93d6e6717 *R/bracket.R
 32587bdb6ff2fee3b4dfab558250aa01 *R/bundleRead.R
-422b9765a09d58f0a15ee172600ce44b *R/cast.R
+273c15e706866757d8b5d0c1e13018a3 *R/cast.R
 e6a523632aaad97f95086d869b85be6c *R/check.subjects.R
 579f9505a6286e265bb2a322fb4c92c7 *R/colname.R
 bc918d7097ebddae09bc2f9f8100f16b *R/compute.cwres.R
@@ -72,7 +73,7 @@ afe4210d2046dd2b3a900977e8ef2705 *R/plot.nm.R
 012c21f285c8ccd1d7421b2f743d5b3d *R/qstat.R
 8fbfbace50a201a6dd0c479f4613ae99 *R/random.R
 fa8db8426bb68b70bca49fb0c1f4c783 *R/read.cwres.data.R
-4be22be578c03a99e6cdac81868f5667 *R/reapply.R
+f4580cbbd14402f3e70dd67713a31ce2 *R/reapply.R
 29c5f26bd820c8ccecc93f0bf67dc429 *R/resample.data.frame.R
 1d561a65b0bd0978d4db0892294138a1 *R/rig.R
 409ec0a64607f70c2761ba8732ed0084 *R/rlog.R
@@ -223,7 +224,7 @@ f35d3f616979dd6d1fec45407ec374d3 *man/backtrans.Rd
 b9616ade101a171f3bcff63d85ef057d *man/breaks.Rd
 c16db0e1e1a20a6a33af5d2ac3a54bc4 *man/bundleRead.Rd
 a12ba26e74609a2f18a857725c8394bb *man/c.temporal.Rd
-d2fedd1345ef964c27c942e061f039ee *man/cast-methods.Rd
+cd6b105ddecd0395c29d0b493194f339 *man/cast-methods.Rd
 62745992f9d9aff4bf04e7638f94aa91 *man/check.subjects.Rd
 3089669a45c8b83f1458655663078d19 *man/closers.Rd
 5d0ad72cb6815e007454fabac092ca35 *man/colname.Rd
@@ -299,7 +300,7 @@ c7739e7c826b89c42ab372dbcb5d91e1 *man/map.Rd
 29f4ce3a6019e0027f9b80235dfa0ca0 *man/melt.keyed.Rd
 8a23c8d53f8f7d0bb4c33d354a9f74a2 *man/metaMerge.Rd
 58691d87755c6f816ce9b4a5066d3721 *man/metaSub.character.Rd
-4728c7cedb3076274b219d31e6ec24c6 *man/metrumrg-package.Rd
+002c3601a4aea79e578dfc1214fef2a5 *man/metrumrg-package.Rd
 d1479aa59016f7de54a169ed3f13b665 *man/metrumrgURL.Rd
 13f1d8e4e99b8d9df3c820f8524285a4 *man/naInContext.Rd
 a634e3d9c06e3c1ea7fd1faed7a3b73e *man/nasum.Rd
@@ -331,7 +332,7 @@ a49956685d67a1d0e1026733ce41780f *man/purge.files.Rd
 dc4f422a2ffe0f8f988afabac1b269d8 *man/qstat.Rd
 654a5414535c575059732a2de5494d85 *man/qsub.Rd
 70f539237cc7b6fa9387343719562fa4 *man/random.Rd
-98cdd325ba0be6d3b46bb65057e991de *man/reapply.Rd
+de826b41103e0465cd1c299a075096d9 *man/reapply.Rd
 da788e8d0e385615b76a39b98381bc34 *man/resample.data.frame.Rd
 2b6f66297040eeeeeb679606cd4f289f *man/rinvchisq.Rd
 ef3a96f196e6e8f4eaee17606b948eeb *man/riwish.Rd
