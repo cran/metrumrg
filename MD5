@@ -1,5 +1,5 @@
-47650ed9cef324e96a34394b4048e7a6 *ChangeLog
-c96dd28738f6c8f227948fffec433d84 *DESCRIPTION
+38e4940f8eb3c8090baa1e58570ef67f *ChangeLog
+ae2715b977ea07cc3dc7520221f32352 *DESCRIPTION
 f5f5366cae7f199a36e0430d81d34c00 *NAMESPACE
 bb95afa7ffb0018e23979ff674dfc035 *R/CLNR.R
 ee0a1777fe591565c8b9e99edaf197bf *R/NONR.R
@@ -30,7 +30,7 @@ dd7ce75b3986bb9a9334bda93d6e6717 *R/bracket.R
 e6a523632aaad97f95086d869b85be6c *R/check.subjects.R
 579f9505a6286e265bb2a322fb4c92c7 *R/colname.R
 bc918d7097ebddae09bc2f9f8100f16b *R/compute.cwres.R
-4c2f260e175a55a050a895fdbf31bded *R/constant.R
+b55b0227b41e3f690773fbfc6822ae5c *R/constant.R
 24c87904adbd90c8432ff9e1cb534fe9 *R/contains.R
 c62087553bf4fb7e0b5c4bad07b45aba *R/convertLines.R
 2b154734e6b25c75d5fe3d4aaf4156d6 *R/covariatePlots.R
@@ -233,7 +233,7 @@ aabc30ca25fb3cfd8b38b10e11b828ae *man/compileflag.Rd
 a132b427f8c8040d3507028d06cf71eb *man/compiler.Rd
 51e4d7175b25a4c9e0e77e6024cc3465 *man/compute.cwres.Rd
 f1463386b0561e5ca8094794ee3835cf *man/config.Rd
-73601814b601d595dd01b5ecc20b9ef0 *man/constant.Rd
+c5c0bc9cf4e16bf3295258c244d2e418 *man/constant.Rd
 e69234ad739336d2a86c158337f60366 *man/contains.Rd
 5af0799650e40b1a93334a9b3131a2ec *man/convertLines.Rd
 c537380b9a241d6126d5d684e1dfaae7 *man/css.Rd
@@ -300,7 +300,7 @@ c7739e7c826b89c42ab372dbcb5d91e1 *man/map.Rd
 f10a052851c6e284f34bf69800f7ac0f *man/melt.keyed.Rd
 8a23c8d53f8f7d0bb4c33d354a9f74a2 *man/metaMerge.Rd
 58691d87755c6f816ce9b4a5066d3721 *man/metaSub.character.Rd
-767f435c58265c7f3a1fa9537269123e *man/metrumrg-package.Rd
+994474c267612f6bed245a8d701f6a54 *man/metrumrg-package.Rd
 9ce9c9b138b014ed479b1e78063f4897 *man/metrumrgURL.Rd
 13f1d8e4e99b8d9df3c820f8524285a4 *man/naInContext.Rd
 a634e3d9c06e3c1ea7fd1faed7a3b73e *man/nasum.Rd
