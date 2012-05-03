@@ -42,6 +42,7 @@ NONR(
 	par.list = NULL, 
 	eta.list = NULL, 
 	missing = -99, 
+	delay = 0,
 	...
 )
 NONR72(
@@ -72,6 +73,7 @@ NONR72(
 	par.list = NULL, 
 	eta.list = NULL, 
 	missing = -99, 
+	delay = 0,
 	...,
 	interface='autolog.pl',
 	q='all.q'
@@ -90,10 +92,14 @@ NONR72(
   \code{command='C:/nm6/test/nm6.pl'}.  The script is assumed to be an NMQual-generated
   wrapper for NONMEM execution, but may also be arbitrarily defined by the user
   (\code{udef=TRUE}).  In the former case, appropriate arguments and modifiers are added
-  to build a typical NMQual commandline (\code{nm.pl}), conditionally wrapped in the arguments for
+  to build a typical NMQual commandline (\code{nm.pl} or \code{autolog.pl}), conditionally wrapped in the arguments for
   a typical grid commandline (\code{qsub}).  The path may be given relative to the 
   current directory.  \code{command} may be a character vector of length greater than one: 
   each element will be run in succession.
+  
+  If \code{command} is missing, an attempt will be made to locate a NONMEM installation 
+  using \code{\link{findNonmemCommand}} (as of package version 5.15).  DISCLAIMER: it is the responsibility
+  of the user to ensure that the command thus-identified is appropriate.
  } 
 
   \item{project}{
@@ -206,6 +212,7 @@ NONR72(
   \item{par.list}{passed to \code{PLOTR}}
   \item{eta.list}{passed to \code{PLOTR}}
   \item{missing}{passed to \code{PLOTR}}
+  \item{delay}{time (msec) to wait before starting each run}
   \item{interface}{the name of a function to prepare NONMEM command lines}
   \item{q}{choice of queue, passed to \code{qsub}}
   \item{\dots}{additional arguments passed to functions that accept them. For example,

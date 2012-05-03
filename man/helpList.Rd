@@ -7,6 +7,9 @@
 \link[=metrumrg]{metrumrg}
 
 \itemize{
+\item \link{$.init} select init element
+\item \link{$<-.init} assign init element
+\item \link{[.initList} subset initList
 \item \link{[.comment} subset a comment
 \item \link{[.conditioned} subset a conditioned object
 \item \link{[.digest} subset a digest object
@@ -38,6 +41,8 @@
 \item \link{as.best} generic
 \item \link{as.character.comment} convert comment to character
 \item \link{as.character.flag} convert flag to character
+\item \link{as.character.init} convert init to character
+\item \link{as.character.initList} convert initList to character
 \item \link{as.character.nmctl} convert nmctl to character
 \item \link{as.character.temporal} convert temporal to character
 \item \link{as.chartime.numeric} convert numeric to time
@@ -71,6 +76,13 @@
 \item \link{as.halfmatrix.default} convert a vector to halfmatrix
 \item \link{as.halfmatrix.halfmatrix} preserve halfmatrix
 \item \link{as.halfmatrix} generic
+\item \link{as.init} convert to init
+\item \link{as.init.init} convert init to init
+\item \link{as.init.numeric} convert numeric to init
+\item \link{as.initList} convert to initList (generic)
+\item \link{as.initList.character} convert character to initList
+\item \link{as.initList.list} convert list (of init) to initList
+\item \link{as.initList.numeric} convert numeric to initList
 \item \link{as.isolated.digest} convert digest to isolated
 \item \link{as.isolated.isolated} convert isolated to isolated
 \item \link{as.isolated.keyed} convert keyed to isolated
@@ -204,7 +216,14 @@
 \item \link{falseDv.nm} DV is defined where EVID is not 0
 \item \link{falseDv} generic
 \item \link{filename} generate standard file name (internal)
+\item \link{findNonmemCommand} find available NONMEM executables
 \item \link{first} repeat, for each element, the first element where a condition is \code{TRUE} (usually, within levels of an index)
+\item \link{fixed} find out if something is fixed (generic)
+\item \link{fixed.init} find out if an init is fixed
+\item \link{fixed.initList} find out if elements of an initList are fixed
+\item \link{fixed<-} set the value of 'fixed'
+\item \link{fixed<-.init} set the value of 'fixed' for an init
+\item \link{fixed<-.initList} set the values of 'fixed' for elements of an initList 
 \item \link{fixedwidth.data.frame} convert a data.frame to fixed-width format
 \item \link{fixedwidth} convert to fixed-width format
 \item \link{fixFile} rewrite run name in control stream file specifications
@@ -212,6 +231,8 @@
 \item \link{forbak} impute NAs using last observation carried forward and then next observation carried backward
 \item \link{format.comment} format comment 
 \item \link{format.flag} format flag
+\item \link{format.init} format init
+\item \link{format.initList} format initList
 \item \link{format.legacy} pretty-print legacy information (conditioned objects)
 \item \link{format.mDate} format mDate
 \item \link{format.mDateTime} format mDateTime
@@ -233,6 +254,7 @@
 \item \link{hide.data.frame} comment out the specified rows of a data frame, appending a flag that suggests the reason
 \item \link{hide} generic
 \item \link{ibw} calculate ideal body weight
+\item \link{ignored} check which rows of an input data set were ignored by NONMEM
 \item \link{ind.cwres} compute conditional weighted residuals (internal)
 \item \link{index.conditioned} index a conditioned object
 \item \link{index.digest} index a digest
@@ -355,6 +377,8 @@
 \item \link{print.comment} print comment
 \item \link{print.flag} print flag
 \item \link{print.halfmatrix} print halfmatrix
+\item \link{print.init} print init
+\item \link{print.initList} print initList
 \item \link{print.keyed.summary} print keyed summary
 \item \link{print.nm.summary} print nm summary
 \item \link{print.nmctl} print nmctl
@@ -413,6 +437,7 @@
 \item \link{summary.hidden.data.frame} summarize hidden rows of a data frame
 \item \link{summary.keyed} summarize a keyed data frame
 \item \link{summary.nm} summarize an nm object
+\item \link{superset} combine all NONMEM input with all output
 \item \link{svnIsText} check if subversioned files are text rather than binary
 \item \link{svnMarkAsNonText} tell Subversion to treat files as binary
 \item \link{svnMarkAsText} tell Subversion to treat files as text
