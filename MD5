@@ -1,5 +1,5 @@
-d7e514cf4780afffe8e3ad6615d6c25e *ChangeLog
-0580147177a29d57cdf756250bae5abb *DESCRIPTION
+4d473aa78ca3d90957f83b45c46ed84e *ChangeLog
+2d5ecde369b8dd43a860e6a19037f5d3 *DESCRIPTION
 ae34faedcb30297ec700b775e834d03d *NAMESPACE
 bb95afa7ffb0018e23979ff674dfc035 *R/CLNR.R
 ee0a1777fe591565c8b9e99edaf197bf *R/NONR.R
@@ -39,7 +39,7 @@ f2cb21bb02b7b4d172bff2386a2acbdc *R/cv.R
 22308d1d4b2777dd7d1e417c05779dc4 *R/diagnosticPlots.R
 24463ad4db78146d3066fe622b50296c *R/electronicAppendix.R
 ef474c5ed1b39904db6937d2fe003b8f *R/findNonmemCommand.R
-80a7580453612130290310fb66b75b79 *R/first.R
+1dc4bce4e4fe8b3f401a70c65829dde7 *R/first.R
 90544925188e646961661ea506d87ac6 *R/fixedwidth.R
 afecd6648fb9877975e27e1b6d02e303 *R/ftable2data.frame.R
 e4a59c62a4da72829f2eb6f1a2d681c4 *R/glue.R
@@ -300,7 +300,7 @@ c7739e7c826b89c42ab372dbcb5d91e1 *man/map.Rd
 f10a052851c6e284f34bf69800f7ac0f *man/melt.keyed.Rd
 8a23c8d53f8f7d0bb4c33d354a9f74a2 *man/metaMerge.Rd
 58691d87755c6f816ce9b4a5066d3721 *man/metaSub.character.Rd
-09715f7c9d9bf91bf7e7d6ef1d45f136 *man/metrumrg-package.Rd
+6990e60e80e34b5291db90881edfd7fb *man/metrumrg-package.Rd
 9ce9c9b138b014ed479b1e78063f4897 *man/metrumrgURL.Rd
 13f1d8e4e99b8d9df3c820f8524285a4 *man/naInContext.Rd
 a634e3d9c06e3c1ea7fd1faed7a3b73e *man/nasum.Rd
