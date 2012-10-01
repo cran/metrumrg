@@ -47,7 +47,7 @@ naKeys(x, ...)
   \item{key}{a character vector of column names in \code{x} that should uniquely distinguish each row}
   \item{value}{a key (character vector of column names)}
   \item{y}{the right argument in the merge}
-  \item{decreasing}{(coercible to) logical; length 1 or length \code{key(x)}}
+  \item{decreasing}{(coercible to) logical; length 1}
   \item{object}{a keyed data.frame}
   \item{_data}{a keyed data.frame}
 }
@@ -80,8 +80,8 @@ row, as \code{duplicated} can: it identifies the duplicates as well as those row
 which they are duplicates. It is recommended to test for \code{NA}s before testing 
 for duplicates.
 
-\code{order} treats \code{decreasing} as an all-or-nothing argument, whereas \code{sort.keyed} 
-allows independent specification for each column.
+%\code{order} treats \code{decreasing} as an all-or-nothing argument, whereas \code{sort.keyed} 
+%allows independent specification for each column.
 
 Methods for \code{merge} and \code{transform} are key-friendly. The method for \code{summary}
 is key-centric.  \code{uniKey} creates a single character vector from all the key columns.
@@ -92,7 +92,7 @@ Most functions and methods documented here return objects with class
 
 \code{key<-} and methods for \code{summary} and \code{print} are used for side effects.
 
-\code{unikey.keyed} returns a character vector as long as \code{nrow(x)}.
+\code{uniKey.keyed} returns a character vector as long as \code{nrow(x)}.
 
 \code{naKeys} and \code{dupKeys} return logical vectors as long as \code{nrow(x)}.
 

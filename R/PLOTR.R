@@ -18,7 +18,7 @@
 	superset = FALSE,
 	...
 ){
-    if(superset) data <- .dataSuperset(
+  if(superset) data <- .dataSuperset(
     	run=run,
     	project=project,
     	logtrans=logtrans,
@@ -119,7 +119,8 @@
 	    ...,
 	    script=script
 	)
-    )	    
+    )
+    invisible(data)
 }
 
 #filters elipses for functions that do not accept them

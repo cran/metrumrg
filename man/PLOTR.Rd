@@ -6,7 +6,8 @@
 \code{PLOTR} is a function to generate diagnostic plots and/or covariate
   evaluation plots following a successful NONMEM run. It is called by
   \code{NONR} if diagnostic plots are requested or can be called independently
-  following a NONMEM run. Plots use the \code{pdf} device.
+  following a NONMEM run. Plots use the \code{pdf} device.  Specific control stream
+  syntax is required: see Note under \code{link{NONR}} .
 }
 \usage{
 PLOTR(
@@ -77,13 +78,13 @@ PLOTR(
   \item{cont.cov}{vector of
   continuous covariate names. Names must match those used as column
   headers in the data file (identified in the control stream).  
-  Values are retrieved from the data file if not part of the NONMEM \$TABLE step. Default
+  Values are retrieved from the data file if not part of the NONMEM $TABLE step. Default
   value is \code{NULL}.  Example: \code{cont.cov=c('AGE','WT','CLCR')}}
 
   \item{cat.cov}{vector of categorical covariate names. Names must match
   those used as column headers in \code{DataFile}.  Values are retrieved
-  from the data file if not part of the NONMEM
-  \$TABLE step. Default value is \code{NULL}.  Example: \code{cat.cov=c('SEX','FOOD')}} 
+  from the data file if not part of the NONMEM $TABLE step. Default value is \code{NULL}.  
+  Example: \code{cat.cov=c('SEX','FOOD')}} 
 
   \item{par.list}{vector of NONMEM model
   	  parameter names.  Values are retrieved from \file{*par.TAB} created in
@@ -113,7 +114,7 @@ PLOTR(
 }
 \details{
   PLOTR creates a plotting dataset using \code{dataSynthesis}. It passes this dataset
-  to each of \code{diagnosticPlots}, \code{covariatePlots(}, and \code{cwresPlots}.  It then 
+  to each of \code{diagnosticPlots}, \code{covariatePlots}, and \code{cwresPlots}.  It then 
   calls the function named by the \code{epilog} argument, if any.  The example \code{epilog} 
   (\file{example/epilog.R}) calls \code{dataSynthesis} itself, and does additional plotting.
   
@@ -122,18 +123,18 @@ PLOTR(
   and even some that don't.  All the lattice plotting functions accept extra 
   arguments, so you may be able to modify the diagnostic plots judiciously
   (with the caviat that the same arguments will be passed to \code{diagnosticPlots}, 
-  \code{covariatePlots(}, and \code{cwresPlots}). \code{pdf} technically does not accept extra 
+  \code{covariatePlots}, and \code{cwresPlots}. \code{pdf} technically does not accept extra 
   arguments, but any specified argument that it does accept will be passed.  
 
   File names deserve special consideration.  \code{plotfile} gives
   the name (or naming strategy) for the diagnostic plots; it is passed to \code{pdf}
   and has a suitable default.  If an alternative is specified, \sQuote{*} will be 
   replaced with \code{run}, the run name.  
-  For example, the default \file{pdf} name is \file{project/DiagnosticPlotReview\_*.pdf}, 
+  For example, the default \file{pdf} name is \file{project/DiagnosticPlotReview_*.pdf}, 
   but you could change it to \file{project/*/DiagnosticPlotReview.pdf}.
      
 }
-\value{Used for side effects.}
+\value{data.frame (the plotting data set), returned invisibly}
 \references{\url{http://metrumrg.googlecode.com}}
 \author{Tim Bergsma}
 \seealso{

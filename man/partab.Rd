@@ -7,10 +7,9 @@
 partab(
 	run, 
 	project = getwd(), 
-	boot = FALSE, 
-	tool = "nm6", 
+	tool = "nm7", 
 	file = filename(rundir, run, ".ctl"), 
-	rundir = filename(project, run, if (boot) ".boot" else ""), 
+	rundir = filename(project, run), 
 	nmlog = file.path(rundir, "NonmemRunLog.csv"), 
 	nmout = filename(rundir, run, ".lst"), 
 	x = params(within = within, by = by, type = type, ...), 
@@ -19,16 +18,15 @@ partab(
 	as = c(NA, "estimate", "unit", "prse"), 
 	type = "parameter", 
 	append = NULL, 
-	pattern = NULL, 
+	purge = FALSE, 
 	...
 )
 wikitab(
 	run, 
 	project = getwd(), 
-	boot = FALSE, 
 	tool = "nm7", 
 	file = filename(rundir, run, ".ctl"), 
-	rundir = filename(project, run, if (boot) ".boot" else ""), 
+	rundir = filename(project, run), 
 	nmlog = file.path(rundir, "NonmemRunLog.csv"), 
 	nmout = filename(rundir, run, ".lst"), 
 	x = params(within = within, by = by, type = type, ...), 
@@ -36,15 +34,14 @@ wikitab(
 	by = "model",
 	type = "wiki", 
 	append = NULL, 
-	pattern = NULL, 
+	purge = FALSE, 
  	...
 )
 }
 \arguments{
   \item{run}{scalar run name (number)}
   \item{project}{path to the directory containing run subdirectories}
-  \item{boot}{Were these runs in \file{.boot} directories?}
-  \item{tool}{\sQuote{nm6} or \sQuote{nm7}: controls methodology}
+  \item{tool}{\sQuote{nm6} or \sQuote{nm7}: controls methodology. Defaults to 'nm7' as of version 5.18.}
   \item{file}{the run-specific input file to read, contra \code{rlog}}
   \item{rundir}{path to run subdirectory}
   \item{nmlog}{The run-specific input file to read (nm6 only). See \code{rlog}.}
@@ -56,7 +53,7 @@ wikitab(
   value of the element (if any) is returned.}
   \item{type}{the element type to seek in \sQuote{within}}
   \item{append}{ignored; NULL is passed to \code{rlog}}
-  \item{pattern}{ignored; NULL is passed to \code{rlog}}
+  \item{purge}{ignored; FALSE is passed to \code{rlog}}
   \item{\dots}{passed to \code{lookup} and \code{rlog}}
 }
 \details{The idea here is to associate pre-specified model-specific identifiers with model output.

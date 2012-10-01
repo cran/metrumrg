@@ -3,10 +3,10 @@ function (
 	run, 
 	command, 
 	project = getwd(), 
-	boot = FALSE,
-	grid = boot, 
-	concurrent = grid,
-	urgent = !boot,
+	wait = TRUE,#boot = FALSE,
+	grid = FALSE,#boot, 
+	concurrent = grid & wait,# & !boot,
+	#urgent = !boot,
 	udef= FALSE, 
 	invisible=udef,
 	compile = TRUE,
@@ -14,7 +14,7 @@ function (
 	split = grid & compile & execute,
 	checkrunno = TRUE, 
 	checksum = TRUE, 
-	diag = !boot, 
+	diag = wait,#!boot, 
 	fdata = TRUE, 
 	logtrans = FALSE,
 	nice= TRUE, 
@@ -27,7 +27,6 @@ function (
 	par.list = NULL, 
 	eta.list = NULL, 
 	missing = -99, 
-	delay = 0,
 	...
 ){
     if (win())  grid <- FALSE
@@ -46,59 +45,62 @@ function (
     	message('using command: ',candidate)
     	command <- candidate
     }    
-    for (each in run) {
-    	Sys.sleep(delay/1000)
-        args <- list(
-		run = each, 
-		command = command, 
-		project = project, 
-		boot = boot,
-		urgent = urgent,
-		checkrunno = checkrunno, 
-		diag = diag, 
-		fdata = fdata, 
-		epilog = epilog, 
-		dvname = dvname, 
-		logtrans = logtrans, 
-		grp = grp, 
-		grpnames = grpnames, 
-		cont.cov = cont.cov, 
-		cat.cov = cat.cov, 
-		par.list = par.list, 
-		eta.list = eta.list, 
-		missing = missing,
-		invisible = invisible, 
-		checksum = checksum, 
-		grid = grid, 
-		nice = nice,
-		udef = udef, 
-		split = split,
-		compile = compile,
-		execute = execute,
-		...
-	)
-        if (concurrent){
+    args <- list(
+	run = run, 
+	command = command, 
+	project = project, 
+	wait = wait,
+	#urgent = urgent,
+	checkrunno = checkrunno, 
+	diag = diag, 
+	fdata = fdata, 
+	epilog = epilog, 
+	dvname = dvname, 
+	logtrans = logtrans, 
+	grp = grp, 
+	grpnames = grpnames, 
+	cont.cov = cont.cov, 
+	cat.cov = cat.cov, 
+	par.list = par.list, 
+	eta.list = eta.list, 
+	missing = missing,
+	invisible = invisible, 
+	checksum = checksum, 
+	grid = grid, 
+	nice = nice,
+	udef = udef, 
+	split = split,
+	compile = compile,
+	execute = execute,
+	...
+    )
+    res <- lapply(
+    	run,
+    	function(this,args,concurrent){
+    		args$run <- this
+    	if (concurrent){
             library(fork)
             suppressWarnings(handleSIGCLD())
             pid <- fork::fork(NULL)
             if (pid == 0) {
-            
-            #library(multicore)
-            #pid <- multicore::fork()
-            #if(inherits(pid,'masterProcess'){
-            	    
                 tryCatch(
                 	do.call("runNonmem", args),
                 	error=function(e)warning(e$message,call.=FALSE,immediate.=TRUE)
                 )
                 exit()
+            } else {
+              pid
             }
         } else tryCatch(
         		do.call('runNonmem', args),
         		error=function(e)warning(e$message,call.=FALSE,immediate.=TRUE)
         	)
-    }
+    	},
+    	args=args,
+    	concurrent=concurrent
+    )
     message("NONR complete.")
+    invisible(res)
 }
 nix <- function().Platform$OS.type == 'unix'
 win <- function().Platform$OS.type == 'windows'
@@ -106,10 +108,10 @@ NONR72 <- function(
 	run, 
 	command, 
 	project = getwd(), 
-	boot = FALSE,
-	grid = boot, 
-	concurrent = grid,
-	urgent = !boot,
+	wait = TRUE,
+	grid = FALSE, 
+	concurrent = grid & wait,
+	#urgent = !boot,
 	udef= FALSE, 
 	invisible=udef,
 	compile = TRUE,
@@ -117,7 +119,7 @@ NONR72 <- function(
 	split = FALSE,
 	checkrunno = TRUE, 
 	checksum = TRUE, 
-	diag = !boot, 
+	diag = wait, 
 	fdata = TRUE, 
 	logtrans = FALSE,
 	nice= TRUE, 
@@ -130,7 +132,6 @@ NONR72 <- function(
 	par.list = NULL, 
 	eta.list = NULL, 
 	missing = -99, 
-	delay = 0,
 	...,
 	interface='autolog.pl',
 	q='all.q'
@@ -138,10 +139,10 @@ NONR72 <- function(
 	run=run,
 	command=command,
 	project=project,
-	boot=boot,
+	wait=wait,
 	grid=grid,
 	concurrent=concurrent,
-	urgent=urgent,
+	#urgent=urgent,
 	udef=udef,
 	invisible=invisible,
 	compile=compile,
@@ -162,7 +163,6 @@ NONR72 <- function(
 	par.list=par.list,
 	eta.list=eta.list,
 	missing= missing,
-	delay = delay,
 	...,
 	interface=interface,
 	q=q

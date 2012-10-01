@@ -3,8 +3,8 @@ function (
 	run,
 	command,
 	project,
-	boot,
-	urgent,
+	wait,
+	#urgent,
 	checkrunno,
 	diag,
 	fdata,
@@ -27,18 +27,13 @@ function (
 	execute,
 	split,
 	plotfile=plotfilename(run,project,grp),
-	runext = if(boot) '.boot' else if(grid) '.lock' else '',
-	rundir = filename(project,run,runext),
+	#runext = if(boot) '.boot' else if(grid) '.lock' else '',
+	rundir = filename(project,run),
 	outfile = filename(rundir,run,'.lst'),
 	streams = project,
 	ctlfile = filename(streams,run,'.ctl'),
-	remove = c(
-		"^F[ISRCMP]","^OU","^nonmem", "^nul$",
-		"WK","LNK$","fort","^nm","lnk$","set$",
-		"^gar","INT","^temp","^tr","^new",
-		if(fdata)c('^FD','^PR')
-	),
-	sync=if(boot)'n'else'y',
+	purge = TRUE,
+	sync=if(wait)'y'else'n',
 	interface='nm.pl',
 	...,
 	perm.cond=NULL
@@ -52,13 +47,32 @@ function (
   # and will do no partial matching.  
   
   #Define some functions.
-  final <- function(x)sub('\\.lock','',x)
+  #final <- function(x)sub('\\.lock','',x)
  
   #Groom arguments.
   rundir <- star(rundir,run)
   ctlfile <- star(ctlfile,run)
   outfile <- star(outfile,run)
-  if(!file.exists(ctlfile))stop(ctlfile,' not found')
+  catfile <- filename(rundir,run,'.cat')
+  pmnfile <- sub('ctl$','pmn',ctlfile) # to support copy of pmn file where present
+  pltfile <- filename(streams,'template','.pmn')
+  
+  #Immediately we need to get the run directory and cat file open, or return an error.
+  if(command!='')if(compile){
+  	  #purge.dir(final(rundir),nice)
+  	  purge.dir(rundir,nice)
+	  #if(rundir!=final(rundir))purge.dir(rundir) #deliberately not "nice"
+	  if(!file.exists(dirname(rundir)))stop('cannot find ',dirname(rundir))
+	  if(!file.exists(rundir))if(!dir.create(rundir))stop('cannot create ',rundir)
+  	  cat(date(),file=catfile,sep='\n') #append is FALSE
+  }
+  
+  #Continue
+  if(!file.exists(ctlfile)){
+  	  msg <- glue(ctlfile,' not found')
+  	  cat(msg,file=catfile,append=TRUE,sep='\n')
+  	  return(msg)
+  }
   control <- read.nmctl(ctlfile)
   #outputdomain <- names(control) =='table' | contains('est',names(control))
   outputdomain <- names(control) %contains% 'tab|est'
@@ -73,12 +87,12 @@ function (
   parfile <- ''
   msffile <- ''
   control <- as.character(control[outputdomain])
-  tryCatch(tabfile <- tabfile(control,dir=final(rundir),...),error=function(e)warning('cannot locate *.tab in control stream for run ',run,call.=FALSE,immediate.=TRUE))
-  tryCatch(parfile <- parfile(control,dir=final(rundir),...),error=function(e)warning('cannot locate *par.tab in control stream for run ', run,call.=FALSE,immediate.=TRUE))
-  tryCatch(msffile <- msffile(control,dir=final(rundir),...),error=function(e)warning('cannot locate *.msf in control stream for run ',run,call.=FALSE,immediate.=TRUE))
-  #tabfile <- tabfile(control,dir=final(rundir),...)
-  #parfile <- parfile(control,dir=final(rundir),...)
-  #msffile <- msffile(control,dir=final(rundir),...)
+  tryCatch(tabfile <- tabfile(control,dir=rundir,...),error=function(e)cat('cannot locate *.tab in control stream for run ',file=catfile,append=TRUE,sep='\n'))
+  tryCatch(parfile <- parfile(control,dir=rundir,...),error=function(e)cat('cannot locate *par.tab in control stream for run ',file=catfile,append=TRUE,sep='\n'))
+  tryCatch(msffile <- msffile(control,dir=rundir,...),error=function(e)cat('cannot locate *.msf in control stream for run ',file=catfile,append=TRUE,sep='\n'))
+  #tabfile <- try(tabfile(control,dir=final(rundir),...))
+  #parfile <- try(parfile(control,dir=final(rundir),...))
+  #msffile <- try(msffile(control,dir=final(rundir),...))
   script <- NULL
   epimatch <- try(match.fun(epilog),silent=TRUE)
   if(is.function(epimatch))epilog <- epimatch
@@ -94,44 +108,51 @@ function (
 	  if(file.exists(tabfile))file.remove(tabfile)
 	  if(file.exists(parfile))file.remove(parfile)
 	  if(file.exists(msffile))file.remove(msffile)
-	  purge.dir(final(rundir),nice)
-	  if(rundir!=final(rundir))purge.dir(rundir) #deliberately not "nice"
-	  dir.create(rundir, showWarnings = FALSE)
 	  dname <- getdname(ctlfile)
 	  #The next error trap is redundant: prevents identical trap in getCovs()
-	  if(!file.exists(resolve(dname,rundir)))stop(dname,' not visible from ',rundir,call.=FALSE)
+	  if(!file.exists(resolve(dname,rundir))){
+	  	  msg <- glue(dname,' not visible from ',rundir)
+	  	  cat(msg,file=catfile,append=TRUE,sep='\n')
+	  	  return(msg)
+	  }
 	  file.copy(ctlfile, file.path(rundir,basename(ctlfile)), overwrite = TRUE)
+	  if(file.exists(pmnfile))file.copy(pmnfile,file.path(rundir,basename(pmnfile)),overwrite = TRUE)
+	  else if(file.exists(pltfile))file.copy(pltfile,file.path(rundir,basename(pmnfile)),overwrite=TRUE)
   }
   #Run NONMEM.
-  if(command=='')message('skipping command')
-  else runCommand(
-  	command=command,
-	run=run,
-	rdir=rundir,
-	boot=boot,
-	urgent=urgent,
-	checksum=checksum,
-	grid=grid,
-	udef=udef,
-	ctlfile=file.path(rundir,basename(ctlfile)),
-	outfile=outfile,
-	invisible=invisible,
-	compile=compile,
-	execute=execute,
-	split=split,
-	sync=sync,
-	interface=interface,
-	...
+  if(command=='')res <- ''
+  else res <- runCommand(
+    	command=command,
+    	run=run,
+    	rdir=rundir,
+    	wait=wait,
+    	#urgent=urgent,
+    	checksum=checksum,
+    	grid=grid,
+    	udef=udef,
+    	ctlfile=file.path(rundir,basename(ctlfile)),
+    	outfile=outfile,
+    	invisible=invisible,
+    	compile=compile,
+    	execute=execute,
+    	split=split,
+    	sync=sync,
+    	interface=interface,
+    	...
   )
   #Clean up.
   if(execute){
-	  if(sync=='n')return() #because we may have reached here before run is complete.
-	  lapply(remove,purge.files,dir=rundir)
-	  if(rundir!=final(rundir)){
-		dir.create(final(rundir), showWarnings = FALSE)
-		file.copy(from=dir(rundir,full.names=TRUE),to=final(rundir),overwrite=TRUE)
-		purge.dir(rundir)
-	  }
+  	  #if (and only if?) this is an unsynchronized run on the grid, 
+  	  #we may have reached here before the run is complete.  So we return without post-processing (diagnostics and cleanup).
+	  if(sync=='n' & grid)return(res)
+	  if(purge)purgeRunDir(dirs=rundir,debug=!fdata,...)
+	  #if(rundir!=final(rundir)){
+		#dir.create(final(rundir), showWarnings = FALSE)
+		#file.copy(from=dir(rundir,full.names=TRUE),to=final(rundir),overwrite=TRUE)
+		#purge.dir(rundir)
+		#rundir <- final(rundir)
+		#catfile <- final(catfile)
+	  #}
 	
 	  #Diagnostics
 	  if(!udef)
@@ -139,11 +160,11 @@ function (
 	    tryCatch(
     		setCwres(
     			cwres=getCwres(
-    				directory=final(rundir)
+    				directory=rundir
     			),
     			file=tabfile
     		),
-    		error=function(e)warning(e$message,call.=FALSE,immediate.=TRUE)
+    		error=function(e)cat(e$message,file=catfile,append=TRUE,sep='\n')
     	    )
 	  if(diag)tryCatch(
 		PLOTR(
@@ -159,13 +180,13 @@ function (
 			eta.list=eta.list,
 			missing=missing,
 			ctlfile=ctlfile,
-			outfile=final(outfile),
-			rundir=final(rundir),
+			outfile=outfile,
+			rundir=rundir,
 			plotfile=plotfile,
 			perm.cond=perm.cond,
 			...
 		),
-		error=function(e)warning(e$message,call.=FALSE,immediate.=TRUE)
+    		error=function(e)cat(e$message,file=catfile,append=TRUE,sep='\n')
 	  )
 	  if (!is.null(epilog))if(is.function(epilog))tryCatch(
 		  epilog(
@@ -181,16 +202,17 @@ function (
 			eta.list=eta.list,
 			missing=missing,
 			ctlfile=ctlfile,
-			outfile=final(outfile),
-			rundir=final(rundir),
+			outfile=outfile,
+			rundir=rundir,
 			perm.cond=perm.cond,
 			...,
 			script=script
 		),
-		error=function(e)warning(e$message,call.=FALSE,immediate.=TRUE)
+    		error=function(e)cat(e$message,file=catfile,append=TRUE,sep='\n')
 	  )
 	  message("Run ", run, " complete.")
   }
+  return(res)
 }
 
 #.............................................................................

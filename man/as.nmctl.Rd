@@ -23,7 +23,7 @@ in a text editor.  \code{as.list.nmctl} simply unclasses its argument.
 \code{as.nmctl.character} does the heavy work, breaking up a character
 vector into records and storing as a list.  If \code{parse} is \code{TRUE}, 
 \code{as.nmctl} attempts to convert certain records to higher-level objects: currently
-the \code{theta} record will be converted to \code{\link{initList}} See \code{\link{autolog.pl}}.
+the \code{theta} record will be converted to \code{\link{initList}} .
 }
 \usage{
 \method{as.character}{nmctl}(x, ...)
@@ -33,7 +33,7 @@ the \code{theta} record will be converted to \code{\link{initList}} See \code{\l
 	pattern='^ *\\\\$([^ ]+)( .*)?$',
 	head='\\\\1',
 	tail='\\\\2',
-  parse=FALSE,
+	parse=FALSE,
 	...
 )
 \method{format}{nmctl}(x, ...)
@@ -44,7 +44,7 @@ write.nmctl(
 	file = "data", 
 	ncolumns = 1, 
 	append = FALSE, 
-	sep = " ", 
+	sep = " ",
 	...
 )
 \method{[}{nmctl}(x, ..., drop = TRUE)

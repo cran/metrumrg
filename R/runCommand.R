@@ -4,8 +4,8 @@
   	...,
 	run,
 	rdir,
-	boot,
-	urgent,
+	wait,
+	#urgent,
 	checksum,
 	grid,
 	udef=FALSE,
@@ -15,7 +15,7 @@
 	intern=invisible,
 	minimized=invisible,
 	invisible=FALSE,
-	split=grid,
+	split=FALSE,
 	N=glue('Run',run,if(split)c('c','e') else NULL),
 	o=rdir,
 	e=rdir,
@@ -23,16 +23,8 @@
 	hold_jid=if(split)c(NA,glue('Run',run,'c'))else NA,
 	V='',
 	j='y',
-	q=if(split)
-	    c(
-	        'compile.q',
-	        if(urgent)'all.q' else 'bootstrap.q'
-	    )
-	else 
-	    if(!execute)
-	        'compile.q'
-            else if(urgent)'all.q' else 'bootstrap.q',
-	sync=if(boot)'n'else'y',
+	q=if(split) c('compile.q','all.q') else if(!execute)'compile.q' else 'all.q',
+	sync=if(wait)'y'else'n',
 	shell='n',
 	b='y',
 	cwd='',
@@ -49,8 +41,8 @@
   	command=command,
   	run=run,
   	rdir=rdir,
-  	boot=boot,
-  	urgent=urgent,
+  	wait=wait,
+  	#urgent=urgent,
   	checksum=checksum,
   	grid=grid,
   	ctlfile=ctlfile,
@@ -66,12 +58,21 @@
   
 
   #set up the call
-  execute <- function(command,intern,minimized,invisible,win){
-	args <- list(command, intern=intern)
-        if (win()) args <- c(args,list(minimized=minimized, invisible=invisible))
-        do.call(system,args)
+  execute <- function(command,intern,minimized,invisible,win,run,rdir){
+	  args <- list(command, intern=intern)
+    if (win()) args <- c(args,list(minimized=minimized, invisible=invisible))
+    result <- tryCatch(
+      do.call(system,args),
+      error=function(e)warning(e$message,call.=FALSE,immediate.=TRUE)
+    )
+    if (is.integer(result)) result <- paste('Run',run,'has exit code',result)
+    cat(result,file=file.path(rdir,glue(run,'.cat')),sep='\n',append=TRUE)
+    return(result) #visible
   }
-  lapply(command,execute,intern=intern,minimized=minimized,invisible=invisible,win=win)
+  ret <- lapply(command,execute,intern=intern,minimized=minimized,invisible=invisible,win=win,run=run,rdir=rdir)
+  ret <- unlist(ret)
+  ret <- unique(ret)
+  return(ret)
 }
 
 

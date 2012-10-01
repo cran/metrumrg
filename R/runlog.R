@@ -75,6 +75,13 @@ as.unilog.pxml <- function(x,run,tool='nm7',...){
 	row.names(uni) <- NULL
 	uni
 }
+xpath <- function(x,file){
+		tree <- xmlParse(readLines(file),asText=TRUE,error=NULL)
+		result <- xpathSApply(tree,x,fun=xmlValue)
+		free(tree)
+		result
+}
+.minstat <- function(x)xpath(x='//nm:termination_status/text()',file=x)
 as.unilog.run <- function(
 	run,
 	logfile='NonmemRunLog.csv',
@@ -83,7 +90,7 @@ as.unilog.run <- function(
 		dirname(outfile),
 		paste(run,'ext',sep='.')
 	),
-	tool='nm6',
+	tool='nm7',
 	...
 ){
 	pars <- if(tool=='nm6')as.unilog.runlog(
@@ -97,7 +104,18 @@ as.unilog.run <- function(
 	requested <- 'cov' %in% names(read.nmctl(outfile))
 	if(tool=='nm7')if(!requested) pars$value[pars$parameter=='cov' & pars$moment=='status'] <- '0'		
 	other <- as.unilog.lst(file=outfile,run=run,tool=tool,...)
-	rbind(pars,other)
+	
+	out <- rbind(pars,other)
+	if(tool=='nm7'){
+		xml <- sub('ext$','xml',extfile)
+		min <- tryCatch(
+			.minstat(xml),
+			error=function(e)'error'
+		)
+		locator <- with(out,parameter=='min' & moment == 'status')
+		if(sum(locator)==1) out$value[locator] <- min
+	}
+	out
 }
 #runlog has implicit columns:
 #run, problem, rseflag, min, cov, mvof, p1...pn, run, (percent)
@@ -111,8 +129,8 @@ as.runlog.unilog <- function(x,...){
 	if(any(duplicated(scalar[,c('run','precedent','parameter')])))stop('prob, min, cov, ofv should be unique within run')
 	if(!all(scalar$moment[scalar$parameter=='ofv'] == 'minimum'))stop('ofv moment should be minimum')
 	scalar <- data.frame(cast(scalar,run + precedent ~ parameter))
-	names(scalar)[names(scalar)=='ofv'] <- 'mvof'
 	for(col in regular)if(!col %in% names(scalar))scalar[[col]] <- NA
+	names(scalar)[names(scalar)=='ofv'] <- 'mvof'
 	scalar <- scalar[,c('run','precedent','prob','min','cov','mvof','data')]
 	poly <- x[!x$parameter %in% regular,]
 	pars <- unique(poly$parameter)

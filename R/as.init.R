@@ -235,3 +235,28 @@ as.initList.character <- function(x,...){
   x <- as.init(x,fixed=fixed,comment=comment,...)
   x
 }
+as.initList.initList <- function(x,...)x
+
+tweak <- function(x,...)UseMethod('tweak')
+tweak.init <- function(x,sd=0.13,digits=3,...){
+	scale <- rnorm(1,mean=1,sd=sd)
+	y <- x$init * scale
+	y <- signif(y,digits=digits)
+	if(y < x$low | y > x$up) return(tweak.init(x,sd=sd,digits=digits,...))
+	x$init <- y
+	x
+}
+	
+tweak.initList <- function(x,sd=0.13,digits=3,...){
+	x[] <- lapply(x,tweak,sd=sd,digits=digits,...)
+	x
+}
+tweak.nmctl <- function(x,sd=0.13,digits=3,...){
+	stopifnot('theta' %in% names(x))
+	x$theta <- as.initList(x$theta)
+	x$theta <- tweak(x$theta,sd=sd,digits=digits,...)
+	x
+}
+	
+
+

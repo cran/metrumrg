@@ -5,7 +5,7 @@
 \description{
 
 	\code{dataSynthesis} scavenges columns from the \file{TAB} file, the \file{par.TAB} file, and the 
-	underlying dataset, returning just observation records (\code{EVID==0}) that are not
+	underlying dataset (all required), returning just observation records (\code{EVID==0}) that are not
   commented.  The second two files are limited to the first record per ID. Columns 
   to scavenge are supplied by \code{grp, cont.cov, cat.cov, par.list, and eta.list}.
   All \file{TAB} file columns are returned, plus first instance of \sQuote{scavenge} columns from 

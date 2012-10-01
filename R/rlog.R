@@ -1,20 +1,14 @@
 `rlog` <-function(
   	run, 
 	project=getwd(), 
-	boot=FALSE, 
+	#boot=FALSE, 
 	append=TRUE,
-	tool='nm6',
+	tool='nm7',
 	file=filename(project,'CombRunLog.csv'),
-	rundir = filename(project, run, if(boot) '.boot' else ''),
+	rundir = filename(project, run),
 	nmlog = file.path(rundir,'NonmemRunLog.csv'),
 	nmout = filename(rundir,run,'.lst'),
-	#pattern=if(boot)c('^F','^nonmem.exe','^P','^O','^Run') else '^FD',
-        pattern = c(
-        	'^F[ISRCMP]','^OU','^nonmem','^nul$', 
-        	'WK', 'LNK$', 'fort', '^nm', 'lnk$', 
-        	'set$','^gar', 'INT', '^temp', '^tr', 
-        	'^new', '^FD','^Run\\d+\\.o\\d+$','^prsizes'
-        ),
+	purge = TRUE,
         ...
 ){
   stopifnot(
@@ -23,13 +17,9 @@
   	length(nmlog)==length(run),
   	length(nmout)==length(run)
   )
-  testfile <- c('FCON','FILE10','OUTPUT')
-  if(tool=='nm7')testfile <- c('FCON','FILE10','INTER')
+  testfile <- c('FCON','FILE10','INTER')
+  if(tool=='nm6')testfile <- c('FCON','FILE10','OUTPUT')
   state <- sapply(rundir,function(dir,...)runstate(rundir=dir,testfile=testfile,...),...)
-  #run <- run[state=='done']
-  #rundir <- rundir[state=='done']
-  #nmout <- nmout[state=='done']
-  #nmlog <- nmlog[state=='done']
   if(!append)if(length(file))if(file.exists(file)) file.remove(file)
   specialize <- function(path,run,nm){
   		if(
@@ -46,29 +36,26 @@
   nmlog <- specialize(nmlog,run,'nmlog')
   nmout <- specialize(nmout,run,'nmout')
   #cleanup
-  if(length(pattern)){
-  		lapply(
-  			rundir[state=='done'],
-  			function(dir,pattern)lapply(
-  				pattern,
-  				purge.files,
-  				dir=dir
-  			),
-  			pattern=pattern
-  		)
-  }
+  if(purge)purgeRunDir(dirs=rundir[state=='done'],...)
   unilist <- lapply(
   	seq(length.out=length(run)),
-  	function(index,run,nmlog,nmout,tool){
-  		res <- try(
+  	function(index,run,nmlog,nmout,tool,...){
+  		res <- tryCatch(
   			as.unilog.run(
   				run=run[[index]],
   				logfile=nmlog[[index]],
   				outfile=nmout[[index]],
   				tool=tool
+  			),
+  			error=function(e)data.frame(
+  				stringsAsFactors=FALSE,
+  				tool=tool,
+  				run=run[[index]],
+  				parameter='min',
+  				moment='status',
+  				value='-1'
   			)
   		)
-  		if(inherits(res,'try-error'))return(NULL)
   		res
   	},
   	run=run,
@@ -100,11 +87,11 @@ runstate <- function(
 	run,
 	project=getwd(),
 	rundir=file.path(project,run),
-	testfile=c('FCON','FILE10','OUTPUT'),
+	testfile=c('FCON','FILE10','INTER'),
 	queued=   c(0,0,0),
 	compiled= c(1,0,0),
 	running=  c(1,1,1),
-	done=     c(1,0,1),
+	done=     c(NA,0,1),
 	...
 ){
 	#FCON: nm/ABLOCK.f
@@ -119,9 +106,12 @@ runstate <- function(
 		length(running)==length(testfile),
 		length(done)==length(testfile)
 	)
+	#For any given run, NONR supports  only run/ as of 5.22, not run.lock/, and run.boot/.
+	#variants <- glue(rundir,c('.boot','.lock',''))
+	#variants <- variants[file.exists(variants)]
+	#if(length(variants))rundir <- variants[[1]] else return('indeterminate')
 	if(!file.exists(rundir))return('indeterminate')
 	testpath=file.path(rundir,testfile)
-
 	state <- file.exists(testpath)
 	possible <- rbind(queued,compiled,running,done)
 	dimnames(possible)[[2]] <- testfile
@@ -131,15 +121,65 @@ runstate <- function(
 		dimnames=dimnames(possible)
 	)
 	possible <- possible[
-		apply(possible,MARGIN=1,FUN=function(x)all(x==state)),
+		apply(possible,MARGIN=1,FUN=function(x)all(x[!is.na(x)]==state[!is.na(x)])),
 		,
 		drop=FALSE
 	]
-	if(dim(possible)[[1]]==1) return(rownames(possible))
+	if(nrow(possible)==1) return(rownames(possible))
 	else return('indeterminate')
 }
-	
 
+progress <- function(run, project=getwd(),...){
+	states <- c('queued','compiled','running','done','indeterminate')
+	state <- sapply(run,runstate,project=project,...)
+	table <- table(state)
+	table <- table[states]
+	names(table) <- states
+	table[is.na(table)] <- 0
+	table
+}
+	
+follow <- function(run,project=getwd(),interval=10,watch='done',until=length(run),visible=TRUE,...){
+	progress <- progress(run=run,project=project,...)
+	if(visible)print(progress)
+	if(progress[watch]< until){
+		Sys.sleep(interval)
+		follow(
+			run=run,
+			project=project,
+			interval=interval,
+			watch=watch,
+			until=until,
+			visible=visible,
+			...
+		)
+	}
+	invisible(NULL)
+}
+
+
+purgeRunDir <- function(
+	dirs,
+	debug=FALSE,
+	standard=c(
+        	'^F[ISRCMP]','^OU','^nonmem','^nul$', 
+        	'WK', 'LNK$', 'fort', '^nm', 'lnk$', 
+        	'set$','^gar', '^temp', '^tr','^new', 
+        	'^Run\\d+\\.o\\d+$','^prsizes','log$',
+        	if(!debug)c('^FD','^PR')
+        ),
+        extra=character(0),
+        pattern=c(standard,extra),
+        ...
+){
+	purgeOne <- function(expr,dir)purge.files(pattern=expr,dir=dir)
+	purgeMany <- function(exprs,dir)lapply(exprs,purgeOne,dir=dir)
+	purgeDir <- function(dir,exprs)purgeMany(exprs,dir)
+	purgeAll <- function(dirs,exprs)lapply(dirs,purgeDir,exprs=exprs)
+	purgeAll(dirs=dirs,exprs=pattern)
+	invisible(NULL)
+}
+		
 
 
 

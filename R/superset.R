@@ -1,22 +1,13 @@
-.absDir <- function (directory) 
-{
-    if (missing(directory)) 
-        stop("argument 'directory' is missing")
-    start <- getwd()
-    if (!file_test("-d", directory)) 
-        stop(paste("nonexistent directory:", directory))
-    setwd(directory)
-    abs <- getwd()
-    setwd(start)
-    abs
-}
 .restore <- function(x,dropped,...){ # add records wherever dropped is TRUE
   stopifnot(is.data.frame(x),is.logical(dropped))
   if(any(is.na(dropped)))stop['dropped must not contain NA']
-  if(sum(!dropped)!=nrow(x))warning('row count does not match sum of non-dropped')
+  #if(sum(!dropped)!=nrow(x))warning('row count does not match sum of non-dropped')
+  if(nrow(x)%%sum(!dropped)!=0)warning('row count not a multiple of non-dropped')
+  scale <- nrow(x)%/%sum(!dropped)
+  dropped <- rep(dropped,scale)
   index <- rep(NA,length(dropped))
-  index[!dropped] <- rownames(x)
-  x[index,,drop=FALSE]
+  index[!dropped] <- seq_len(nrow(x))
+  x <- x[index,,drop=FALSE]
 }
 .distill <- function(x,known=character(0),...){ # strike repeated columns within and among data frames
     stopifnot(is.list(x))
@@ -59,40 +50,34 @@
       altered <- !is.na(x) & !is.na(y) & x != y
       any(generated | altered)
 }
-
-.superbind <- function(lst,i=0,exclusive=NULL,digits=5){ # recursively cbind with auto-rename and exclusivity options
-    stopifnot(is.list(lst),!!length(lst),is.data.frame(lst[[1]]))
-    x <- lst[[1]]
-    i <- i + 1
-    lst <- lst[-1]
+.superbind <- function(lst,i=0,exclusive=NULL,digits=5,x=data.frame(),...){ # recursively cbind with auto-rename and exclusivity options
     if(!length(lst))return(x)
+    stopifnot(is.list(lst),is.data.frame(lst[[1]]))
     y <- lst[[1]]
     lst <- lst[-1]
-    if(nrow(y) < nrow(x)){
-      message('ignoring table ',i,': expected ', nrow(x),' rows but found ',nrow(y),'.')
-      return(x)
-    }
+    if(is.character(exclusive)) y <- y[,names(y)[!names(y) %in% exclusive],drop=FALSE]
+    if(nrow(x)==0) x <- data.frame(row.names=1:nrow(y))
     if(nrow(y) %% nrow(x) != 0){
-      message('ignoring table ',i,': expected ', nrow(x),' rows but found ',nrow(y),' (not a multiple).')
-      return(x)
+      message('ignoring table ',i,': expected ', nrow(x),' rows but found ',nrow(y))
+      y <- data.frame(row.names=1:nrow(x))
+    }else{
+      x <- x[rep(seq_len(nrow(x)),nrow(y)%/% nrow(x)),]
     }
+    stopifnot(nrow(y)==nrow(x))
     analogs <- intersect(names(x),names(y))
     #(implicitly, y cols with new names are informative.)
     index <- sapply(analogs, function(col).informative(x[[col]],y[[col]],digits=digits))
     goodDups <- character(0)
     if(length(analogs))goodDups <- analogs[index]
     badDups <- setdiff(analogs,goodDups)
-    
     #every analog y column will be renamed or dropped (or both).
-    if(is.character(exclusive)) y <- y[,!names(y) %in% exclusive,drop=FALSE]
-    else{
-      if(is.null(exclusive)) y <- y[,!names(y) %in% badDups,drop=FALSE]
-      else if(as.logical(exclusive)) y <- y[,!names(y) %in% analogs,drop=FALSE]
-    }
+    if(is.null(exclusive)) y <- y[,!names(y) %in% badDups,drop=FALSE]
+    else if(is.logical(exclusive))if(exclusive==TRUE) y <- y[,!names(y) %in% analogs,drop=FALSE]
     fix <- names(y) %in% analogs
     if(any(fix))names(y)[fix] <- map(names(y)[fix],from=analogs,to=glue(analogs,'.',i))
-    z <- cbind(x,y)
-    .superbind(c(list(z),lst), i=i, exclusive=exclusive,digits=digits)
+    x <- cbind(x,y)
+    rownames(x) <- NULL
+    .superbind(lst=lst, i=i+1, exclusive=exclusive,digits=digits,x=x,...)
 }
 .read.any <- function(file,args){ # read a file according to a protocol (first arg is function ref.) 
     fun <- match.fun(args[[1]])
@@ -117,7 +102,7 @@ ignored <- function(
   if(missing(run) & missing(rundir))run <- sub('[.][^.]+$','',basename(ctlfile))
   if(missing(project) & !missing(rundir))project <- dirname(rundir)
   if(missing(project) & missing(rundir) & !missing(ctlfile))project <- dirname(dirname(ctlfile))
-  if(.absDir(rundir)!=.absDir(dirname(ctlfile)))warning('rundir does not specify parent of ctlfile')
+  if(normalizePath(rundir)!=normalizePath(dirname(ctlfile)))warning('rundir does not specify parent of ctlfile')
   control <- read.nmctl(ctlfile)
   dname <- getdname(control)
   datafile <- resolve(dname,rundir)
@@ -170,7 +155,6 @@ superset <- function(
   if(missing(run) & missing(rundir))run <- sub('[.][^.]+$','',basename(ctlfile))
   if(missing(project) & !missing(rundir))project <- dirname(rundir)
   if(missing(project) & missing(rundir) & !missing(ctlfile))project <- dirname(dirname(ctlfile))
-  #if(.absDir(rundir)!=.absDir(dirname(ctlfile)))warning('rundir does not specify parent of ctlfile')
   dropped <- ignored(run=run,project=project,rundir=rundir,ctlfile=ctlfile,read.input=read.input,...)
   control <- read.nmctl(ctlfile)
   dname <- getdname(control)
@@ -190,7 +174,7 @@ superset <- function(
   output <- lapply(output,.revert,labels=labels,analogs=analogs)
   #Now all the tables have corresponding column names.
   expected <- nrow(input) - sum(dropped)
-  lapply(output,.agree,expected)
+  #lapply(output,.agree,expected)
   if(length(key)) return(.markup(lst=c(list(input),output),key=key))
   output <- .distill(output)#drop repeat columns
   output <- lapply(output,.restore,dropped=dropped)#expand
