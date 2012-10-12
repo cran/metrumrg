@@ -1,4 +1,4 @@
-91b287cc9ad86a4ba59d64363f3a7a44 *DESCRIPTION
+b1dc0edb0f4e4d7712b308fd88a89563 *DESCRIPTION
 124efe9af62207e5046923338ab9bf91 *NAMESPACE
 bb95afa7ffb0018e23979ff674dfc035 *R/CLNR.R
 db9c49914f45bde4492524b50bb65fcd *R/NONR.R
@@ -24,6 +24,7 @@ f24e6172dc36705c7ffb33b797c15423 *R/as.xml.R
 f9c8de8aad6bcf1ae6e0766c01ed9f62 *R/bin.R
 f5d56bdf2e495e7637ce34d073af2a67 *R/bounds.R
 dd7ce75b3986bb9a9334bda93d6e6717 *R/bracket.R
+32587bdb6ff2fee3b4dfab558250aa01 *R/bundleRead.R
 e6a523632aaad97f95086d869b85be6c *R/check.subjects.R
 579f9505a6286e265bb2a322fb4c92c7 *R/colname.R
 bc918d7097ebddae09bc2f9f8100f16b *R/compute.cwres.R
@@ -53,6 +54,7 @@ c0b5d9ad6c5fe0bfe1376154d567b2c7 *R/latex.R
 9387d9fd9062d0571eff8cec6687c44a *R/metaMerge.R
 8de0e2a84a475f8027b5657e3d26807e *R/metaSub.character.R
 88da3c664c364379661e7e979a6a8d92 *R/metrumrgURL.R
+e15b7e180bf85e229bea3a3fc3e98878 *R/nasum.R
 217577d051ad6fd743aaca25b7142c41 *R/nest.R
 72cc71d2a55b5cf4cda957f3c3ee0f56 *R/omegacor.R
 fc47880c94b29b0dc75240fd9416dfd1 *R/ops.keyed.R
@@ -80,10 +82,10 @@ b0d72d35c9fb316cf8fa0047c69e4a3e *R/runlog.R
 ca68eb8b7f65dc9ac3b423b786608edd *R/shuffle.R
 bdce1d9e83e252d680decc57a2fe4457 *R/simpar.R
 52881f66392f81d18dd34f0b5aa4d19c *R/snap.R
-7cf1ee2ff4a91a25ff7d4be3e22ce226 *R/sortedInstall.R
+7c91604e9c05efba630d4534f6775ddb *R/sortedInstall.R
 d3c65e657ea54235ea39472bc78903cb *R/stableMerge.R
 8b2318e4443f483545f6c9523ff9a21b *R/static.R
-eea8ea5370cc5361db8be548906c995a *R/superset.R
+41a95e0698e7bde04e78d58d7560bb8b *R/superset.R
 77ab4e8c91dedf2aeef57af5612506b8 *R/svnProp.R
 fca2181c59e18125edb3791ee106da86 *R/temporal.R
 2901cb341d8eacc4b5ffbed238484b5f *R/totitle.R
@@ -213,6 +215,7 @@ f35d3f616979dd6d1fec45407ec374d3 *man/backtrans.Rd
 39c1fc76333ea88769c896081de94d7f *man/bounds.Rd
 6f6b07c9132f625e93862c811e3a03be *man/bracket.Rd
 b9616ade101a171f3bcff63d85ef057d *man/breaks.Rd
+c16db0e1e1a20a6a33af5d2ac3a54bc4 *man/bundleRead.Rd
 1eeacedf4eede0295f0e59ee8e98777a *man/c.temporal.Rd
 62745992f9d9aff4bf04e7638f94aa91 *man/check.subjects.Rd
 3089669a45c8b83f1458655663078d19 *man/closers.Rd
@@ -250,11 +253,11 @@ e7c1b6161d9d435dc35bf86f8498f252 *man/glue.Rd
 6a7e196a798a7e4e9f6b0150bcb5422f *man/groupnames.Rd
 4c056a88876779e1fae409e28d7c230b *man/half.matrix.Rd
 7e772a9151a39d6b15b0097127e3b187 *man/hash.Rd
-d94b6fa44172a0cd1e17a432e7a34c7e *man/helpAdminister.Rd
+8a7c05b8bb3a0074302d179a4da8a953 *man/helpAdminister.Rd
 4c4b0c6e51c5e06a00d9b5a944694c0d *man/helpBrowse.Rd
 0705f0dffbb483aa5e3b57d8412c22da *man/helpClasses.Rd
-fefcc93fba42e8dc0dca829c6bd88afb *man/helpDataFrame.Rd
-b907e55137176ccf24dbc99a48273516 *man/helpList.Rd
+be534573e97ea2525aefbc2491fc642c *man/helpDataFrame.Rd
+f2bc750e46adaa0212e5a61b13490c8d *man/helpList.Rd
 7328ad6addb11929852820a332462707 *man/helpMatrix.Rd
 dac0ae84e014725fca52ef73c3ad46a3 *man/helpModel.Rd
 1c01d9b008cab40414687fda80be98eb *man/helpPharmacometric.Rd
@@ -286,9 +289,10 @@ c14aa9c328b2f969196997ccc280c78d *man/latex.options.Rd
 c7739e7c826b89c42ab372dbcb5d91e1 *man/map.Rd
 303b050dd1e0e41be51f182349c60919 *man/metaMerge.Rd
 58691d87755c6f816ce9b4a5066d3721 *man/metaSub.character.Rd
-4fa0a47217eb1a1ef7da6f3826f98685 *man/metrumrg-package.Rd
+49bdffb81e93f2b415f6923f0c32d481 *man/metrumrg-package.Rd
 d1479aa59016f7de54a169ed3f13b665 *man/metrumrgURL.Rd
 13f1d8e4e99b8d9df3c820f8524285a4 *man/naInContext.Rd
+a634e3d9c06e3c1ea7fd1faed7a3b73e *man/nasum.Rd
 a0dd19b586c9dafb86c3f42b0c69f911 *man/nest.Rd
 7c70d874f45a49d617ff25896fc5902b *man/nix.Rd
 e3a224c49c22717df5ee474d2aaa88d8 *man/nm.pl.Rd
@@ -333,7 +337,7 @@ f067c32705ef8cd3df58e7a656d53436 *man/shuffle.Rd
 81dc03117bf844764f44da2e36b32c18 *man/simblock.Rd
 cedc6cd162f507007512d1f0c9687eec *man/simpar.Rd
 a9e8d5a440525ecb68c5eea276c0fe6d *man/snap.Rd
-5e9267018f8aa81fda1eb6a81c654494 *man/sortedInstall.Rd
+98726272bdfffab9c304bc9f4b8b785f *man/sortedInstall.Rd
 700701b22beca899e5f496d403681366 *man/spaces.Rd
 6c1fef180785a50aead9095bd3c8639c *man/sqrtm.Rd
 963b17e884e90c8e0078b06c29b9598a *man/stableMerge.Rd
@@ -341,7 +345,7 @@ ae610fda692e6658a47fdbf7aae9c11f *man/star.Rd
 28100c439faefcda6782f551160b8c3b *man/static.Rd
 31d2937b85d33b969b4b3ee5924d94f4 *man/strain.Rd
 f97804e76ebfd7792f43fc8d8fe0c695 *man/summary.nm.Rd
-404831dca3750e04afde19cc2a00e707 *man/superset.Rd
+687b1700f1e5dacb52f0af57bd5e7663 *man/superset.Rd
 6d9661f2ce8df4b8ffedb80a65bc7fcf *man/svnIsText.Rd
 5ea9bdfac75f8e01fd4536b6cbcb1e85 *man/svnMarkAsNonText.Rd
 3a80ffd037866ccb57288ed606075759 *man/svnMarkAsText.Rd
