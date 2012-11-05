@@ -1,4 +1,4 @@
-b1dc0edb0f4e4d7712b308fd88a89563 *DESCRIPTION
+3df60d24ed459d95cd61da775f9dd668 *DESCRIPTION
 124efe9af62207e5046923338ab9bf91 *NAMESPACE
 bb95afa7ffb0018e23979ff674dfc035 *R/CLNR.R
 db9c49914f45bde4492524b50bb65fcd *R/NONR.R
@@ -85,7 +85,7 @@ bdce1d9e83e252d680decc57a2fe4457 *R/simpar.R
 7c91604e9c05efba630d4534f6775ddb *R/sortedInstall.R
 d3c65e657ea54235ea39472bc78903cb *R/stableMerge.R
 8b2318e4443f483545f6c9523ff9a21b *R/static.R
-41a95e0698e7bde04e78d58d7560bb8b *R/superset.R
+2002d476f800050a023333930f2f272e *R/superset.R
 77ab4e8c91dedf2aeef57af5612506b8 *R/svnProp.R
 fca2181c59e18125edb3791ee106da86 *R/temporal.R
 2901cb341d8eacc4b5ffbed238484b5f *R/totitle.R
@@ -189,8 +189,8 @@ fc9d4bb31a16a12c7448706f00046ede *inst/example/wikimath/wikimath-figure.pdf
 94bb1926af2cb69dbbb337a31b8d4c9a *inst/example/wikimath/wikimath.tex
 f12e667a7f056b45f697703dc2f3d07e *man/AUC.Rd
 35938d2dd0bd22c23171c264aaf568f5 *man/CLNR.Rd
-b062929772c4d65428570426a371fd7b *man/NONR.Rd
-04c79dd4f68e123045a2f766ec56f57d *man/PLOTR.Rd
+6e310fee419f6377ce7c17a997a9ab11 *man/NONR.Rd
+927200d59fbc661cb9bb9a77dfa1eccc *man/PLOTR.Rd
 e20803a11ec236f0693d535b1bf6a9da *man/Tmax.Rd
 0ea578fb41f38f52c8cd851d552e4d4c *man/Tmin.Rd
 d341c8d451319e60e39b208a239f234a *man/accept.Rd
@@ -223,7 +223,7 @@ c16db0e1e1a20a6a33af5d2ac3a54bc4 *man/bundleRead.Rd
 5184c2aa31cf2b5ac774996618627837 *man/command.Rd
 aabc30ca25fb3cfd8b38b10e11b828ae *man/compileflag.Rd
 a132b427f8c8040d3507028d06cf71eb *man/compiler.Rd
-2db9a25a2e61138250e0d733308e83f9 *man/compute.cwres.Rd
+51e4d7175b25a4c9e0e77e6024cc3465 *man/compute.cwres.Rd
 f1463386b0561e5ca8094794ee3835cf *man/config.Rd
 a304467b04897a3a3e6b894ece77151f *man/constant.Rd
 e0b984ecfe2a26b1475206bc78858565 *man/contains.Rd
@@ -231,7 +231,7 @@ e0b984ecfe2a26b1475206bc78858565 *man/contains.Rd
 c537380b9a241d6126d5d684e1dfaae7 *man/css.Rd
 362d2c4af9c4ce16efc9f10cbd221f67 *man/cv.Rd
 453ab31910436cf56d88e38efc6331c5 *man/dataFormat.Rd
-1bf3f4e98b7e0fffa4a256e22e5daac5 *man/dataSynthesis.Rd
+671e6584e4ed019703ddcdb11911dbc0 *man/dataSynthesis.Rd
 d2d8e5c373089e635bab86dfbea1b2d7 *man/diagnosticPlots.Rd
 c2cb10e49a0bc2e0ae44aa566a28321b *man/digest.Rd
 1ddb00f173771553c57d4f2d7a6c6101 *man/electronicAppendix.Rd
@@ -240,7 +240,7 @@ c2cb10e49a0bc2e0ae44aa566a28321b *man/digest.Rd
 b725457c69a8b24b3adf9226070553d1 *man/filename.Rd
 f5df72e4d1a2f6be44f540b7364fdd19 *man/findNonmemCommand.Rd
 d5cee414e5fdd087721ce879c7b1f861 *man/first.Rd
-f1f74c7d237394da00497c2869b20cb3 *man/fixProblem.Rd
+bb117cb563477ecfd5c2438b093a6fed *man/fixProblem.Rd
 61f43cfdf7cf5d4e86a40854d61f300a *man/fixedwidth.Rd
 50d61dc62605fb5921bc420163277316 *man/flag.Rd
 d58586ef98167557e4c669dd2de37b4f *man/ftable2data.frame.Rd
@@ -253,7 +253,7 @@ e7c1b6161d9d435dc35bf86f8498f252 *man/glue.Rd
 6a7e196a798a7e4e9f6b0150bcb5422f *man/groupnames.Rd
 4c056a88876779e1fae409e28d7c230b *man/half.matrix.Rd
 7e772a9151a39d6b15b0097127e3b187 *man/hash.Rd
-8a7c05b8bb3a0074302d179a4da8a953 *man/helpAdminister.Rd
+13b8403474bbdf24192fd59aedc71a9b *man/helpAdminister.Rd
 4c4b0c6e51c5e06a00d9b5a944694c0d *man/helpBrowse.Rd
 0705f0dffbb483aa5e3b57d8412c22da *man/helpClasses.Rd
 be534573e97ea2525aefbc2491fc642c *man/helpDataFrame.Rd
@@ -289,7 +289,7 @@ c14aa9c328b2f969196997ccc280c78d *man/latex.options.Rd
 c7739e7c826b89c42ab372dbcb5d91e1 *man/map.Rd
 303b050dd1e0e41be51f182349c60919 *man/metaMerge.Rd
 58691d87755c6f816ce9b4a5066d3721 *man/metaSub.character.Rd
-49bdffb81e93f2b415f6923f0c32d481 *man/metrumrg-package.Rd
+eaf17b9d27e096f1a083b0b7d2a4e3bb *man/metrumrg-package.Rd
 d1479aa59016f7de54a169ed3f13b665 *man/metrumrgURL.Rd
 13f1d8e4e99b8d9df3c820f8524285a4 *man/naInContext.Rd
 a634e3d9c06e3c1ea7fd1faed7a3b73e *man/nasum.Rd
@@ -346,7 +346,7 @@ ae610fda692e6658a47fdbf7aae9c11f *man/star.Rd
 31d2937b85d33b969b4b3ee5924d94f4 *man/strain.Rd
 f97804e76ebfd7792f43fc8d8fe0c695 *man/summary.nm.Rd
 687b1700f1e5dacb52f0af57bd5e7663 *man/superset.Rd
-6d9661f2ce8df4b8ffedb80a65bc7fcf *man/svnIsText.Rd
+3b3c436da21a7bda6947656508071fbe *man/svnIsText.Rd
 5ea9bdfac75f8e01fd4536b6cbcb1e85 *man/svnMarkAsNonText.Rd
 3a80ffd037866ccb57288ed606075759 *man/svnMarkAsText.Rd
 eed807bae932a8de00ab6aebc0af3c44 *man/svnMimeType.Rd
