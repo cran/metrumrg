@@ -1,4 +1,4 @@
-2917d2b325faa16f34f158a487e0cc94 *DESCRIPTION
+27ce58c0bebdaf7346cd7d80b174bf52 *DESCRIPTION
 124efe9af62207e5046923338ab9bf91 *NAMESPACE
 bb95afa7ffb0018e23979ff674dfc035 *R/CLNR.R
 47c6e21b5c568df339297645ab8d2e39 *R/NONR.R
@@ -76,7 +76,7 @@ fa8db8426bb68b70bca49fb0c1f4c783 *R/read.cwres.data.R
 1d561a65b0bd0978d4db0892294138a1 *R/rig.R
 85a15dbb9e0551a7ec3d8b1102b64154 *R/rlog.R
 d9a1b93ebea4e64e1300de097ca52e52 *R/runCommand.R
-c45b9bf20dcee15d1b1e78ce9490105f *R/runNonmem.R
+01003eaa5f3934935444845c51ee500d *R/runNonmem.R
 b0d72d35c9fb316cf8fa0047c69e4a3e *R/runlog.R
 9e81c8f82f7a91ab09d8bc6396c7af17 *R/safeQuote.R
 ca68eb8b7f65dc9ac3b423b786608edd *R/shuffle.R
@@ -145,7 +145,7 @@ e230a6a7308175ef7e17b32245578945 *inst/example/project/nonmem/ctl/1001.ctl
 aa54b90b0904fb4a895d574ccec46bde *inst/example/project/nonmem/ctl/1004.ctl
 a28864bc002d5f791fc7ee0f1c4a5732 *inst/example/project/nonmem/ctl/1005.ctl
 300b01cb6b1d3367bd3071027340949e *inst/example/project/nonmem/ctl/1105.ctl
-55c7a69ebc81ac9ade72bbab54031f0f *inst/example/project/nonmem/ctl/template.pmn
+55c7a69ebc81ac9ade72bbab54031f0f *inst/example/project/nonmem/ctl/template.pnm
 f60cc357e5317c0bb99d65b12cc728ff *inst/example/project/nonmem/sim/1.ctl
 6f2cd04de5f985a1cc736437afc727a0 *inst/example/project/nonmem/sim/10.ctl
 f74f2f88d75bb22b9a1d96af265e3b1a *inst/example/project/nonmem/sim/2.ctl
@@ -190,7 +190,7 @@ fc9d4bb31a16a12c7448706f00046ede *inst/example/wikimath/wikimath-figure.pdf
 94bb1926af2cb69dbbb337a31b8d4c9a *inst/example/wikimath/wikimath.tex
 f12e667a7f056b45f697703dc2f3d07e *man/AUC.Rd
 35938d2dd0bd22c23171c264aaf568f5 *man/CLNR.Rd
-6e310fee419f6377ce7c17a997a9ab11 *man/NONR.Rd
+997c0f9e30469ae7f37cf59d071900bd *man/NONR.Rd
 3522f77f43fd4c66f1c7c08c995d2758 *man/PLOTR.Rd
 e20803a11ec236f0693d535b1bf6a9da *man/Tmax.Rd
 0ea578fb41f38f52c8cd851d552e4d4c *man/Tmin.Rd
@@ -290,7 +290,7 @@ c14aa9c328b2f969196997ccc280c78d *man/latex.options.Rd
 c7739e7c826b89c42ab372dbcb5d91e1 *man/map.Rd
 8a23c8d53f8f7d0bb4c33d354a9f74a2 *man/metaMerge.Rd
 58691d87755c6f816ce9b4a5066d3721 *man/metaSub.character.Rd
-ed1d50f924dbc22b0c03f5136f7028a1 *man/metrumrg-package.Rd
+c8458b5e23b29c2b27167ecb556fd14b *man/metrumrg-package.Rd
 d1479aa59016f7de54a169ed3f13b665 *man/metrumrgURL.Rd
 13f1d8e4e99b8d9df3c820f8524285a4 *man/naInContext.Rd
 a634e3d9c06e3c1ea7fd1faed7a3b73e *man/nasum.Rd
