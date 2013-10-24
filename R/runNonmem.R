@@ -1,6 +1,7 @@
 `runNonmem` <-
 function (
 	run,
+	...,
 	command,
 	project,
 	wait,
@@ -33,7 +34,6 @@ function (
 	purge = TRUE,
 	sync=if(wait)'y'else'n',
 	interface='nm.pl',
-	...,
 	perm.cond=NULL,
 	pe=NA
 ){
@@ -252,7 +252,7 @@ function (
 	)
 	try(source(script,local=TRUE))
   }
-  fixProblem <- function(x,run)sub('(^ *(RUN#? *)?)([^ ]+)(.*$)',glue('\\1',run,'\\4'),x,ignore.case=TRUE)
+  fixProblem <- function(x,run)sub('(^ *(RUN#? *)?)([^ ;]+)(.*$)',glue('\\1',run,'\\4'),x,ignore.case=TRUE)
   fixFile <- function(x,run){
         x <- explicitPath(x)
 	risk <- grep('\\bTAB\\b|\\bMSF\\b',x,ignore.case=TRUE)

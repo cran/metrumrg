@@ -15,5 +15,8 @@ I want to ....
 \item \link[=static]{find the static portion of a data frame}
 \item \link[=digest]{diagnose and visualize static data relationships}
 \item \link[=nasum]{diagnose missingness}
+\item \link[=combinations]{show sorted unique rows}
+\item \link[=supp]{add supplemental data to a CDISC data set}
+\item \link[=specification]{document and enforce data set properties}
 }
 }

@@ -1,3 +1,38 @@
+5.54
+
+* rlog fixes a bug where failed covariance step was reported as 0 instead of 1.
+* Example scripts have been rerun.
+
+5.53
+
+* accept now has arguments for lib, lib.loc, and type; it now logs the paths of packages.
+* NONR, NONR72, runNonmem, runCommand, and PLOTR now have dots in the second position of argument list, to prevent accidental partial matching.
+* makePreamble is introduced for greater control of as.document and as.pdf. Related functions are reorganized.
+* constant has default for argument within
+* as.spec and related functions support creation and enforcement of data properties
+
+5.52
+
+* prev supports factors.
+* merge.nm is undefined.
+* as.nm no longer limits the significance of time variables.
+* runhead and prev now return logical(0) if argument is logical(0).
+* superset supports Fortran 95 comparison operators, e.g. IGNORE=(REP > 0), etc.
+
+5.51
+
+* Better logic for ignore functionality under superset.
+* iterations is tolerant of NUMSIGDIG.
+* worker directories purged by default in purgeRunDir, etc.
+* Categorical covariates (cat.cov) in PLOTR are coerced to factor.
+* snap accepts non-finite elements.
+* rlog tolerates runs with maxeval:0.
+* NONR:checkrunno works with control streams having comments after $PROBLEM.
+* tabular.data.frame picks up source and file arguments, as for ltable.
+* tabular.data.frame supports row color.
+* [.keyed supports detection of defined elements.
+* New functions: combinations, supp, nondecreasing, nonincreasing, monotonic.
+
 5.50
 
 * bugfix for only: broken since 5.46.

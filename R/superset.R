@@ -211,7 +211,7 @@ superset <- function(
     if(is.na(val))stop('no value')
     if(is.na(op))op <- 'EQ'
     pos <- match(label,labels)
-    vec <- data[pos]
+    vec <- data[,pos]
     if(any(is.na(vec))){
     	    warning('imputing NA as "."')
     	    vec[is.na(vec)] <- '.'
@@ -261,6 +261,7 @@ superset <- function(
   x <- x[x != '']
   x <- sub('^\\s+','',x)
   x <- sub(';.*','',x)
+  x <- x[x != '']
   x <- paste(x,collapse=' ')
   x <- gsub(',',' ',x)
   x <- gsub(' +',' ',x)
@@ -323,8 +324,18 @@ superset <- function(
   x <- lapply(x,.ignorecondition)
   x
 }
-#
+
 .ignorecondition <- function(x,...){ # convert conditional tests to canonical form
+  # x is a single condition of the form value or label.value or label.op.value or possibly (version 5.52) label > value
+  x <- gsub('\\s','',x) # strip all white space
+  # x is a single condition of the form value or label.value or label.op.value or possibly label>value
+  # collapse cases:  Fortran 95 supports == /= < > <= >=
+  x <- sub('==','.EQ.',x)
+  x <- sub('/=','.NE.',x)
+  x <- sub('>=','.GE.',x)
+  x <- sub('<=','.LE.',x)
+  x <- sub('>' ,'.GT.',x)
+  x <- sub('<' ,'.LT.',x)
   # x is a single condition of the form value or label.value or label.op.value
   x <- strsplit(x,'.',fixed=TRUE)[[1]]
   stopifnot(length(x) %in% c(1:3))
